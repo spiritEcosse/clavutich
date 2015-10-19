@@ -54,6 +54,7 @@ def local_act():
     local("git commit -a -F git_commit_message")
     current_branch = local("git symbolic-ref --short -q HEAD", capture=True)
 
+
     if current_branch != 'master':
         local("git checkout master")
         local("git merge %s" % current_branch)

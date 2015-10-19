@@ -3,7 +3,7 @@ __author__ = 'igor'
 
 from fabric.api import local, run, cd, settings
 import os
-from clavutich.settings import BASE_DIR
+from clavutich.settings import BASE_DIR, PROJECT_NAME
 from fabric.state import env
 from clavutich.local_settings import HOSTS
 env.user = 'root'
@@ -33,8 +33,8 @@ def remote_act():
         with settings(host_string=host):
             with cd(dir_name):
                 run("git reset --hard")
-                run("kill -9 $(ps -ef|grep -v grep |grep 'clavutich' | awk '{print $2}')")
-                run("clavutich")
+                run("kill -9 $(ps -ef|grep -v grep |grep '%s' | awk '{print $2}')" % PROJECT_NAME)
+                run("%s" % PROJECT_NAME)
 
 
 def local_act():
@@ -42,7 +42,7 @@ def local_act():
     prepare deploy
     :return: None
     """
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "clavutich.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "%s.settings" % PROJECT_NAME)
     activate_env = os.path.expanduser(os.path.join(BASE_DIR, ".env/bin/activate_this.py"))
     execfile(activate_env, dict(__file__=activate_env))
     local("./manage.py test")
@@ -53,7 +53,6 @@ def local_act():
     local("git add .")
     local("git commit -a -F git_commit_message")
     current_branch = local("git symbolic-ref --short -q HEAD", capture=True)
-
 
     if current_branch != 'master':
         local("git checkout master")

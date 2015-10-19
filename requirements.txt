@@ -1,0 +1,14 @@
+Django==1.8.5
+Fabric==1.10.2
+argparse==1.2.1
+backports.ssl-match-hostname==3.4.0.2
+certifi==2015.9.6.2
+django-grunted-assets==0.2.1
+django-pipeline==1.5.4
+ecdsa==0.13
+futures==3.0.3
+paramiko==1.15.3
+psycopg2==2.6.1
+pycrypto==2.6.1
+tornado==4.2.1
+wsgiref==0.1.2

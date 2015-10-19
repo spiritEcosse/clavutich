@@ -33,8 +33,8 @@ def remote_act():
         with settings(host_string=host):
             with cd(dir_name):
                 run("git reset --hard")
-                run("kill -9 $(ps -ef|grep -v grep |grep 'neatapps' | awk '{print $2}')")
-                run("neatapps")
+                run("kill -9 $(ps -ef|grep -v grep |grep 'clavutich' | awk '{print $2}')")
+                run("clavutich")
 
 
 def local_act():

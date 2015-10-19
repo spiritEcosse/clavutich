@@ -20,7 +20,7 @@ import tornado.wsgi
 if django.VERSION[1] > 5:
     django.setup()
 
-define('port', type=int, default=7777)
+define('port', type=int, default=5555)
 
 
 def main():

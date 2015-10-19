@@ -1,5 +1,6 @@
 __author__ = 'igor'
 
+
 from fabric.api import local, run, cd, settings
 import os
 from clavutich.settings import BASE_DIR

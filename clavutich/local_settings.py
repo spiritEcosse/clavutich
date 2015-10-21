@@ -11,7 +11,7 @@ DEBUG = True
 
 DB_BACKEND = 'django.contrib.gis.db.backends.postgis'
 DB_NAME = 'clavutich'
-DB_USER = 'neatapps'
+DB_USER = 'clavutich'
 DB_PASSWORD = 1
 DB_HOST = ''
 DB_PORT = ''

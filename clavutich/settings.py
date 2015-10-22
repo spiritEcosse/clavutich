@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
+    'suit',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,6 +40,10 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'catalog',
+    'mptt',
+    'feincms',
+    'django_select2',
+    'debug_toolbar',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -103,6 +108,12 @@ USE_L10N = True
 
 USE_TZ = True
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.template.context_processors.request',
+    'django.core.context_processors.request',
+)
+
+INTERNAL_IPS = ('localhost', )
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/

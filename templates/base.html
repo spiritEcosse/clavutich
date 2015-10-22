@@ -4,6 +4,7 @@
 
 <head>
     {% load staticfiles %}
+    {% load mptt_tags %}
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,7 +15,7 @@
     <title>{% block title %}{% trans 'Clavutich' %}{% endblock %}</title>
 
     {% if debug == True %}
-        <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static "src/css/shop-homepage.css" %}">
     {% else %}
         <link rel="stylesheet" type="text/css" href="{% static "build/css/style.min.css" %}">
@@ -27,7 +28,6 @@
     <![endif]-->
 
 </head>
-
 <body>
 
 {% block header %}
@@ -44,6 +44,7 @@
                 </button>
                 <a class="navbar-brand" href="{% url 'home' %}">Logo</a>
             </div>
+
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
@@ -57,31 +58,15 @@
                         <ul class="nav navbar-nav">
                             <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Каталог <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    {% for category in categories %}
-                                        {% if not category.categories.exists %}
-                                            <li><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>
-                                        {% else %}
-                                            <li class="dropdown dropdown-submenu">
-                                                <a href="{{ category.get_absolute_url }}" class="dropdown-toggle" data-toggle="dropdown">{{ category.title }}</a>
-                                                <ul class="dropdown-menu">
-                                                    {% for category in category.categories.all %}
-                                                        {% if not category.categories.exists %}
-                                                            <li><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>
-                                                        {% else %}
-                                                            <li class="dropdown dropdown-submenu">
-                                                                <a href="{{ category.get_absolute_url }}" class="dropdown-toggle" data-toggle="dropdown">{{ category.title }}</a>
-                                                                <ul class="dropdown-menu">
-                                                                    {% for category in category.categories.all %}
-                                                                        <li><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>
-                                                                    {% endfor %}
-                                                                </ul>
-                                                            </li>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                </ul>
-                                            </li>
+                                    {% recursetree nodes %}
+                                        <li><a href="{{ node.get_absolute_url }}">{{ node.title }}</a></li>
+
+                                        {% if not node.is_leaf_node %}
+                                            <ul class="children">
+                                                {{ children }}
+                                            </ul>
                                         {% endif %}
-                                    {% endfor %}
+                                    {% endrecursetree %}
                                 </ul>
                             </li>
                         </ul>
@@ -176,8 +161,8 @@
 {% endblock %}
 
 {% if debug %}
-    <script src="/node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="/node_modules/jquery/dist/jquery.js"></script>
+    <script src="{% static 'bower_components/jquery/dist/jquery.js' %}"></script>
+    <script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.js' %}"></script>
 {% else %}
     <script src="{% static "build/js/script.min.js" %}"></script>
 {% endif %}

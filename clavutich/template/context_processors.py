@@ -3,4 +3,4 @@ from catalog.models import Category
 
 
 def context_data(request):
-    return {'categories': Category.objects.filter(parent=None, enable=1).prefetch_related('categories').iterator()}
+    return {'nodes': Category.objects.all()}

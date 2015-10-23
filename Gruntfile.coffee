@@ -1,18 +1,35 @@
 module.exports = (grunt) ->
   grunt.initConfig(
     pkg: grunt.file.readJSON('package.json')
+    coffee:
+      files:
+        src: ['clavutich/src/coffee/**/*.coffee']
+        dest: 'static/src/js/clavutich/src/js/script.js'
     min:
       dist:
-        src: ['static/bower_components/jquery/dist/jquery.min.js',
-              'static/bower_components/bootstrap/dist/js/bootstrap.min.js',
-              'static/src/js/**/*.js'],
+        src: [
+          'static/bower_components/jquery/dist/jquery.min.js',
+          'static/bower_components/bootstrap/dist/js/bootstrap.min.js',
+          'static/bower_components/angular/angular.min.js',
+          'static/bower_components/angular-animate/angular-animate.min.js',
+          'static/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
+          'static/bower_components/angular-scroll/angular-scroll.min.js',
+          'static_root/djangular/js/django-angular.js',
+          'static/src/js/**/*.js',
+        ],
         dest: 'static/build/js/script.min.js'
     cssmin:
       dist:
-        src: ['static/src/css/**/*.css',
-              'node_modules/font-awesome/css/font-awesome.css',],
+        src: [
+          'static/src/css/**/*.css',
+              'static_root/djangular/css/styles.css',
+              'static/bower_components/font-awesome/css/font-awesome.css',
+        ],
         dest: 'static/build/css/style.min.css'
   )
 
+  grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-yui-compressor')
+
+  grunt.registerTask('default', ['coffee'])
 

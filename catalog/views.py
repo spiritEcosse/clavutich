@@ -2,7 +2,6 @@ from django.shortcuts import render
 from catalog.models import Product, Category
 from django.views import generic
 from django.views.generic.detail import SingleObjectMixin
-from PIL import Image
 
 
 class CategoryDetailView(SingleObjectMixin, generic.ListView):
@@ -19,7 +18,7 @@ class CategoryDetailView(SingleObjectMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(CategoryDetailView, self).get_context_data(**kwargs)
-        context['categories_menu'] = Category.objects.filter(parent=None, enable=1).prefetch_related('categories').iterator()
+        context['nodes'] = Category.objects.all()
         return context
 
 

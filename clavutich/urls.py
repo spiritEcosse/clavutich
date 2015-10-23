@@ -1,6 +1,6 @@
 from django.conf.urls import include, url, patterns
 from django.contrib import admin
-from clavutich.views import IndexView
+from clavutich.views import IndexView, WriteToUsView
 from clavutich.settings import MEDIA_ROOT, MEDIA_URL
 from django.conf.urls.static import static
 from clavutich import settings
@@ -15,11 +15,6 @@ urlpatterns = [
 urlpatterns += [
     url(r'^about-us/$', views.flatpage, {'url': '/about-us/'}, name='about'),
     url(r'^contacts/$', views.flatpage, {'url': '/contacts/'}, name='contacts'),
+    url(r'^svyazatsya-s-nami/', WriteToUsView.as_view(), name='write_to_us'),
     url(r'^(?P<url>.*/)$', views.flatpage),
 ]
-
-if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns += patterns('',
-                            url(r'^__debug__/', include(debug_toolbar.urls)),
-                            )

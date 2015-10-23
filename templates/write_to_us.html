@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}Связаться с нами{% endblock %}
+
+{% block main %}
+    <div class="col-xs-12" id="form" ng-controller="MyFormCtrl" ng-cloak>
+        <h1>Связаться с нами</h1>
+
+        <script type="text/ng-template" id="alert.html">
+            <div class="alert" style="background-color:#fa39c3;color:white" role="alert">
+                <div ng-transclude></div>
+            </div>
+        </script>
+
+        {% verbatim alerts %}
+            <div id="alerts">
+                <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+            </div>
+        {% endverbatim alerts %}
+
+        <form name="{{ form.form_name }}" method="post" novalidate="novalidate" action="svyazatsya-s-nami/">
+            {% csrf_token %}
+            {{ form.as_div }}
+            <div class="cBtn" >
+                <button id="comment_form" type="button" class="btn btn-primary" ng-disabled="disabled" ng-click="submit()">
+                    <i class="fa fa-share"></i>
+                    {% trans 'Send Message' %}
+                </button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

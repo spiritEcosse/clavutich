@@ -5,64 +5,60 @@
 {% block title %}{{ object.title|lower|capfirst }}{% endblock %}
 
 {% block main %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3">
-                <p class="lead">Каталог</p>
-                <nav class="navbar">
-                    <div id="MainMenu">
-                        <div class="list-group panel">
-                            {% for category in categories_menu %}
-                                <a href="{{ category.get_absolute_url }}" class="list-group-item list-group-item-default" data-parent="#MainMenu">
-                                    {{ category.title|lower|capfirst }}
-                                    {% if category.categories.exists %}
-                                        <i class="fa fa-caret-down"></i>
+    <div class="col-md-3">
+        <p class="lead">Каталог</p>
+        <nav class="navbar">
+            <div id="MainMenu">
+                <div class="list-group panel">
+                    {% for category in categories_menu %}
+                        <a href="{{ category.get_absolute_url }}" class="list-group-item list-group-item-default" data-parent="#MainMenu">
+                            {{ category.title|lower|capfirst }}
+                            {% if category.categories.exists %}
+                                <i class="fa fa-caret-down"></i>
+                            {% endif %}
+                        </a>
+
+                        {% if category.categories.exists %}
+                            <div class="collapse in" aria-labelledby="cat_{{ forloop.counter }}" id="cat_{{ forloop.counter }}">
+                                {% for sub_cat in category.categories.all %}
+                                    <a href="{{ sub_cat.get_absolute_url }}" class="list-group-item" data-parent="#sub_cat_{{ forloop.counter }}">
+                                        {{ sub_cat.title }}
+                                        {% if sub_cat.categories.exists %}<i class="fa fa-caret-down"></i>{% endif %}
+                                    </a>
+
+                                    {% if sub_cat.categories.exists %}
+                                        <div class="collapse in list-group-submenu" id="sub_cat_{{ forloop.counter }}">
+                                            {% for sub_sub_cat in sub_cat.categories.all %}
+                                                <a href="{{ sub_sub_cat.get_absolute_url }}" class="list-group-item" data-parent="#sub_sub_{{ forloop.counter }}">{{ sub_sub_cat.title }}</a>
+                                            {% endfor %}
+                                        </div>
                                     {% endif %}
-                                </a>
-
-                                {% if category.categories.exists %}
-                                    <div class="collapse in" aria-labelledby="cat_{{ forloop.counter }}" id="cat_{{ forloop.counter }}">
-                                        {% for sub_cat in category.categories.all %}
-                                            <a href="{{ sub_cat.get_absolute_url }}" class="list-group-item" data-parent="#sub_cat_{{ forloop.counter }}">
-                                                {{ sub_cat.title }}
-                                                {% if sub_cat.categories.exists %}<i class="fa fa-caret-down"></i>{% endif %}
-                                            </a>
-
-                                            {% if sub_cat.categories.exists %}
-                                                <div class="collapse in list-group-submenu" id="sub_cat_{{ forloop.counter }}">
-                                                    {% for sub_sub_cat in sub_cat.categories.all %}
-                                                        <a href="{{ sub_sub_cat.get_absolute_url }}" class="list-group-item" data-parent="#sub_sub_{{ forloop.counter }}">{{ sub_sub_cat.title }}</a>
-                                                    {% endfor %}
-                                                </div>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                    </div>
-                </nav>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
+        </nav>
+    </div>
 
-            <div class="col-md-9">
-                {% with object.title|lower|capfirst as title %}
-                    <h1>{{ title }}</h1>
+    <div class="col-md-9">
+        {% with object.title|lower|capfirst as title %}
+            <h1>{{ title }}</h1>
 
-                    <div class="row">
-                        <div class="col-sm-3">
-                            {% thumbnail object.image "200x200" as im %}
-                                <a href="{{ object.image.url }}" class="pull-left">
-                                    <img src="{{ im.url }}" class="img-responsive img-rounded" alt="{{ title }}" title="{{ title }}">
-                                </a>
-                            {% endthumbnail %}
-                        </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    {% thumbnail object.image "200x200" as im %}
+                        <a href="{{ object.image.url }}" class="pull-left">
+                            <img src="{{ im.url }}" class="img-responsive img-rounded" alt="{{ title }}" title="{{ title }}">
+                        </a>
+                    {% endthumbnail %}
+                </div>
 
-                        <div class="col-sm-9">
-                            <p>{{ object.description }}</p>
-                        </div>
-                    </div>
-                {% endwith %}
+                <div class="col-sm-9">
+                    <p>{{ object.description }}</p>
+                </div>
             </div>
-        </div>
+        {% endwith %}
     </div>
 {% endblock %}

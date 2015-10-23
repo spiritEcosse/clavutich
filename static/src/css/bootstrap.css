@@ -5275,7 +5275,7 @@ a.list-group-item-warning.active:focus {
   border-color: #8a6d3b;
 }
 .list-group-item-default {
-    background-color: #e7e7e7;
+    background-color: #F8F8F8;
     color: #777;
 }
 .list-group-item-danger {

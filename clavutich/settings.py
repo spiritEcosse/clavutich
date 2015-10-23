@@ -48,6 +48,7 @@ INSTALLED_APPS = (
     'django_select2',
     'sorl.thumbnail',
     'bootstrap_pagination',
+    'djangular',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -119,8 +120,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.template.context_processors.request',
     'django.core.context_processors.request',
 )
-
-INTERNAL_IPS = ('localhost', )
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/

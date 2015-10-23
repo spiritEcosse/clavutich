@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-{% load i18n %}
-
 <head>
     {% load staticfiles %}
     {% load mptt_tags %}
@@ -12,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{% block title %}{% trans 'Clavutich' %}{% endblock %}</title>
+    <title>{% block title %}Clavutich{% endblock %}</title>
 
     {% if debug == True %}
         <link rel="stylesheet" type="text/css" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.css' %}">
@@ -49,10 +47,10 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#">О нас</a>
+                        <a href="{% url 'about' %}">О нас</a>
                     </li>
                     <li>
-                        <a href="#">Контакты</a>
+                        <a href="{% url 'contacts' %}">Контакты</a>
                     </li>
                     <li>
                         <ul class="nav navbar-nav">
@@ -153,7 +151,14 @@
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright &copy; Your Website 2014</p>
+                    {% with start_year='2015' %}
+                        {% now "Y" as current_year %}
+                        <p>Copyright &copy; clavutich.com.ua {{ start_year }}
+                        {% if current_year != start_year %}
+                            - {{ current_year }}
+                        {% endif %}
+                    {% endwith %}
+                    </p>
                 </div>
             </div>
         </footer>

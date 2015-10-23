@@ -2,11 +2,12 @@ from django.shortcuts import render
 from catalog.models import Product, Category
 from django.views import generic
 from django.views.generic.detail import SingleObjectMixin
+from PIL import Image
 
 
 class CategoryDetailView(SingleObjectMixin, generic.ListView):
     model = Category
-    paginate_by = 10
+    paginate_by = 1
     template_name = 'catalog/category_detail.html'
 
     def get(self, request, *args, **kwargs):
@@ -24,3 +25,14 @@ class CategoryDetailView(SingleObjectMixin, generic.ListView):
 
 class ProductDetailView(generic.DetailView):
     model = Product
+    template_name = 'catalog/product_detail.html'
+
+    def get(self, request, *args, **kwargs):
+        if self.kwargs.get('product_slug', False):
+            self.kwargs['slug'] = self.kwargs['product_slug'].split('/').pop()
+        return super(ProductDetailView, self).get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductDetailView, self).get_context_data(**kwargs)
+        context['categories_menu'] = Category.objects.filter(parent=None, enable=1).prefetch_related('categories').iterator()
+        return context

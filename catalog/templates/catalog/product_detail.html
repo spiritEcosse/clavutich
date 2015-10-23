@@ -2,7 +2,7 @@
 {% load bootstrap_pagination %}
 {% load thumbnail %}
 
-{% block title %}{{ object.title }}{% endblock %}
+{% block title %}{{ object.title|lower|capfirst }}{% endblock %}
 
 {% block main %}
     <div class="container">
@@ -45,45 +45,23 @@
             </div>
 
             <div class="col-md-9">
-                <h1>{{ object.title }}</h1>
+                {% with object.title|lower|capfirst as title %}
+                    <h1>{{ title }}</h1>
 
-                <div class="row">
-                    <div class="col-sm-3">
-                        {% thumbnail object.image "200x200" as im %}
-                            <img src="{{ im.url }}" class="img-responsive img-rounded" alt="{{ title }}" title="{{ title }}">
-                        {% endthumbnail %}
-                    </div>
-                    <div class="col-sm-9">
-                        <p>{{ object.description }}</p>
-                    </div>
-                </div>
-
-                <div class="row">
-                    {% for product in page_obj %}
-                        <div class="col-sm-4 col-lg-4 col-md-4">
-                            <div class="thumbnail">
-                                {% with product.title|lower|capfirst as title %}
-                                    {% thumbnail product.image "150x150" as im %}
-                                        <a href="{{ product.get_absolute_url }}">
-                                            <img src="{{ im.url }}" class="img-responsive img-rounded" title="{{ title }}" alt="{{ title }}">
-                                        </a>
-                                    {% endthumbnail %}
-
-                                    <div class="caption">
-                                        <h4><a href="{{ product.get_absolute_url }}">{{ title|truncatechars:30 }}</a></h4>
-                                        <p>{{ product.description|truncatechars:80 }}</p>
-                                    </div>
-                                {% endwith %}
-                            </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            {% thumbnail object.image "200x200" as im %}
+                                <a href="{{ object.image.url }}" class="pull-left">
+                                    <img src="{{ im.url }}" class="img-responsive img-rounded" alt="{{ title }}" title="{{ title }}">
+                                </a>
+                            {% endthumbnail %}
                         </div>
-                    {% endfor %}
-                </div>
 
-                <div class="pagination">
-                    <span class="step-links">
-                        {% bootstrap_paginate page_obj %}
-                    </span>
-                </div>
+                        <div class="col-sm-9">
+                            <p>{{ object.description }}</p>
+                        </div>
+                    </div>
+                {% endwith %}
             </div>
         </div>
     </div>

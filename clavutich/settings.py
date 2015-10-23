@@ -39,11 +39,15 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.flatpages',
+    'debug_toolbar',
     'catalog',
     'mptt',
     'feincms',
     'django_select2',
-    'debug_toolbar',
+    'sorl.thumbnail',
+    'bootstrap_pagination',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -55,8 +59,12 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 )
 
+SHOW_TOOLBAR_CALLBACK = DEBUG
+SITE_ID = 1
 ROOT_URLCONF = 'clavutich.urls'
 
 TEMPLATES = [
@@ -77,7 +85,6 @@ TEMPLATES = [
     ]
 
 WSGI_APPLICATION = 'clavutich.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases

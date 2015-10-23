@@ -7,7 +7,6 @@
 body {
     padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
-
 .dropdown-menu > li.kopie > a {
     padding-left:5px;
 }
@@ -116,16 +115,13 @@ body {
 }
 
 .caption {
-    height: 130px;
+    height: 167px;
     overflow: hidden;
 }
 
 .caption h4 {
-    white-space: nowrap;
-}
-
-.thumbnail img {
-    width: 100%;
+    line-height: 23px;
+    white-space: normal;
 }
 
 .ratings {
@@ -135,7 +131,7 @@ body {
 }
 
 .thumbnail {
-    padding: 0;
+    padding: 4px;
 }
 
 .thumbnail .caption-full {
@@ -144,5 +140,5 @@ body {
 }
 
 footer {
-    margin: 50px 0;
+    margin: 20px 0;
 }

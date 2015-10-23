@@ -10,7 +10,7 @@ module.exports = (grunt) ->
     cssmin:
       dist:
         src: ['static/src/css/**/*.css',
-              'node_modules/font-awesome/css/font-awesome.css'],
+              'node_modules/font-awesome/css/font-awesome.css',],
         dest: 'static/build/css/style.min.css'
   )
 

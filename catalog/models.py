@@ -16,6 +16,8 @@ class Category(MPTTModel):
     date_last_modified = models.DateTimeField(auto_now=True)
     sort = models.IntegerField(verbose_name=_('Sort'), blank=True, default=0)
 
+    _slug_separator = '/'
+
     class MPTTMeta:
         ordering = ['tree_id', 'lft']
 
@@ -27,21 +29,20 @@ class Category(MPTTModel):
     def __unicode__(self):
         return self.title
 
-    def get_tree_group(self, branch):
-        if self.parent:
-            branch.append(self.parent.slug)
-            self.parent.get_tree_group(branch)
+    def get_ancestors_and_self(self):
+        """
+        Gets ancestors and includes itself. Use treebeard's get_ancestors
+        if you don't want to include the category itself. It's a separate
+        function as it's commonly used in templates.
+        """
+        return list(self.get_ancestors()) + [self]
 
-        return branch
-
-    def slug_to_string(self):
-        slug = list()
-        slug.append(self.slug)
-        slug.extend(self.get_tree_group([]))
-        return '/'.join(map(str, reversed(slug)))
+    def full_slug(self):
+        slugs = [category.slug for category in self.get_ancestors_and_self()]
+        return self._slug_separator.join(slugs)
 
     def get_absolute_url(self):
-        return reverse('catalog:category', kwargs={'slug': self.slug_to_string()})
+        return reverse('catalog:category', kwargs={'slug': self.full_slug()})
 
     def image_preview(self):
         return u'<img style="max-width:100px; max-height:100px" src="%s" />' % self.image.url
@@ -60,6 +61,8 @@ class Product(models.Model):
     date_last_modified = models.DateTimeField(auto_now=True)
     sort = models.IntegerField(verbose_name=_('Sort'), blank=True, default=0)
 
+    _slug_separator = '/'
+
     class Meta:
         ordering = ('sort', 'title', '-date_last_modified')
         verbose_name = _('Product')
@@ -69,7 +72,7 @@ class Product(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('catalog:product', kwargs={'product_slug': self.slug, 'slug': self.category.slug})
+        return reverse('catalog:product', kwargs={'slug': self.slug, 'category_slug': self.category.full_slug()})
 
     def image_preview(self):
         return u'<img style="max-width:100px; max-height:100px" src="%s" />' % self.image.url

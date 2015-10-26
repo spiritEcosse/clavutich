@@ -1,0 +1,28 @@
+{% load mptt_tags %}
+
+<div class="col-md-3">
+    <p class="lead">Каталог</p>
+    <nav class="navbar">
+        <div id="MainMenu">
+            <div class="list-group panel">
+                {% recursetree nodes %}
+                    {% with title=node.title|lower|capfirst|truncatechars:30 url=node.get_absolute_url %}
+                        {% if not node.is_leaf_node %}
+                            <a href="{{ url }}" class="list-group-item list-group-item-info" data-parent="#MainMenu">
+                                {{ title }} <i class="fa fa-caret-down"></i>
+                            </a>
+
+                            <div class="collapse in list-group-submenu" aria-labelledby="cat_{{ forloop.counter }}" id="cat_{{ forloop.counter }}">
+                                {{ children }}
+                            </div>
+                        {% else %}
+                            <a href="{{ url }}" class="list-group-item list-group-item-info" data-parent="#MainMenu">
+                                {{ title }}
+                            </a>
+                        {% endif %}
+                    {% endwith %}
+                {% endrecursetree %}
+            </div>
+        </div>
+    </nav>
+</div>

@@ -1,46 +1,23 @@
 {% extends "base.html" %}
-{% load bootstrap_pagination %}
 {% load thumbnail %}
 
 {% block title %}{{ object.title|lower|capfirst }}{% endblock %}
 
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="/">Главная</a></li>
+
+        {% for category in object.category.get_ancestors %}
+            <li><a href="{{ category.get_absolute_url }}">{{ category.title|lower|capfirst|truncatechars:30 }}</a></li>
+        {% endfor %}
+
+        <li><a href="{{ object.category.get_absolute_url }}">{{ object.category.title|lower|capfirst|truncatechars:30 }}</a></li>
+        <li class="active">{{ object.title|lower|capfirst|truncatechars:50 }}</li>
+    </ol>
+{% endblock %}
+
 {% block main %}
-    <div class="col-md-3">
-        <p class="lead">Каталог</p>
-        <nav class="navbar">
-            <div id="MainMenu">
-                <div class="list-group panel">
-                    {% for category in categories_menu %}
-                        <a href="{{ category.get_absolute_url }}" class="list-group-item list-group-item-default" data-parent="#MainMenu">
-                            {{ category.title|lower|capfirst }}
-                            {% if category.categories.exists %}
-                                <i class="fa fa-caret-down"></i>
-                            {% endif %}
-                        </a>
-
-                        {% if category.categories.exists %}
-                            <div class="collapse in" aria-labelledby="cat_{{ forloop.counter }}" id="cat_{{ forloop.counter }}">
-                                {% for sub_cat in category.categories.all %}
-                                    <a href="{{ sub_cat.get_absolute_url }}" class="list-group-item" data-parent="#sub_cat_{{ forloop.counter }}">
-                                        {{ sub_cat.title }}
-                                        {% if sub_cat.categories.exists %}<i class="fa fa-caret-down"></i>{% endif %}
-                                    </a>
-
-                                    {% if sub_cat.categories.exists %}
-                                        <div class="collapse in list-group-submenu" id="sub_cat_{{ forloop.counter }}">
-                                            {% for sub_sub_cat in sub_cat.categories.all %}
-                                                <a href="{{ sub_sub_cat.get_absolute_url }}" class="list-group-item" data-parent="#sub_sub_{{ forloop.counter }}">{{ sub_sub_cat.title }}</a>
-                                            {% endfor %}
-                                        </div>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
-        </nav>
-    </div>
+    {% include "left_bar.html" %}
 
     <div class="col-md-9">
         {% with object.title|lower|capfirst as title %}

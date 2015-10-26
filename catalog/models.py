@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
@@ -5,16 +7,16 @@ from mptt.models import MPTTModel, TreeForeignKey
 
 
 class Category(MPTTModel):
-    title = models.CharField(verbose_name=_('Title category'), max_length=200)
-    parent = TreeForeignKey('self', verbose_name=_('Parent'), related_name='categories', blank=True, null=True,
+    title = models.CharField(verbose_name=u'Название категории', max_length=200)
+    parent = TreeForeignKey('self', verbose_name=u'Родительская категория', related_name='categories', blank=True, null=True,
                             db_index=True)
-    image = models.ImageField(verbose_name=_('Main image'), upload_to='images/catalog/category/%Y/%m/')
-    slug = models.SlugField(verbose_name=_('Slug'), max_length=200, unique=True)
-    description = models.TextField(verbose_name=_('Description'), blank=True)
-    enable = models.BooleanField(verbose_name=_('Enable'), default=True)
+    image = models.ImageField(verbose_name=u'Главное изображение', upload_to='images/catalog/category/%Y/%m/')
+    slug = models.SlugField(verbose_name=u'Ссылка', max_length=200, unique=True)
+    description = models.TextField(verbose_name=u'Описание', blank=True)
+    enable = models.BooleanField(verbose_name=u'Включено', default=True)
     date_create = models.DateTimeField(auto_now_add=True)
     date_last_modified = models.DateTimeField(auto_now=True)
-    sort = models.IntegerField(verbose_name=_('Sort'), blank=True, default=0)
+    sort = models.IntegerField(verbose_name=u'Сортировка', blank=True, default=0)
 
     _slug_separator = '/'
 
@@ -23,8 +25,8 @@ class Category(MPTTModel):
 
     class Meta:
         ordering = ('sort', 'title', '-date_last_modified')
-        verbose_name = _('Category')
-        verbose_name_plural = _('Categories')
+        verbose_name = u'Категория'
+        verbose_name_plural = u'Категории'
 
     def __unicode__(self):
         return self.title
@@ -46,27 +48,27 @@ class Category(MPTTModel):
 
     def image_preview(self):
         return u'<img style="max-width:100px; max-height:100px" src="%s" />' % self.image.url
-    image_preview.short_description = _('Image')
+    image_preview.short_description = u'Изображение'
     image_preview.allow_tags = True
 
 
 class Product(models.Model):
-    title = models.CharField(verbose_name=_('Title product'), max_length=200)
-    image = models.ImageField(verbose_name=_('Main image'), upload_to='images/catalog/product/%Y/%m/')
-    slug = models.SlugField(verbose_name=_('Slug'), max_length=200, unique=True)
-    category = models.ForeignKey('Category', verbose_name=_('Categories'), related_name='products')
-    description = models.TextField(verbose_name=_('Description'))
-    enable = models.BooleanField(verbose_name=_('Enable'), default=True)
+    title = models.CharField(verbose_name=u'Название продукта', max_length=200)
+    image = models.ImageField(verbose_name=u'Главное изображение', upload_to='images/catalog/product/%Y/%m/')
+    slug = models.SlugField(verbose_name=u'Ссылка', max_length=200, unique=True)
+    category = models.ForeignKey('Category', verbose_name=u'Категория', related_name='products')
+    description = models.TextField(verbose_name=u'Описание')
+    enable = models.BooleanField(verbose_name=u'Включено', default=True)
     date_create = models.DateTimeField(auto_now_add=True)
     date_last_modified = models.DateTimeField(auto_now=True)
-    sort = models.IntegerField(verbose_name=_('Sort'), blank=True, default=0)
+    sort = models.IntegerField(verbose_name=u'Сортировка', blank=True, default=0)
 
     _slug_separator = '/'
 
     class Meta:
         ordering = ('sort', 'title', '-date_last_modified')
-        verbose_name = _('Product')
-        verbose_name_plural = _('Products')
+        verbose_name = u'Продукт'
+        verbose_name_plural = u'Продукты'
 
     def __unicode__(self):
         return self.title
@@ -76,7 +78,7 @@ class Product(models.Model):
 
     def image_preview(self):
         return u'<img style="max-width:100px; max-height:100px" src="%s" />' % self.image.url
-    image_preview.short_description = _('Image')
+    image_preview.short_description = u'Изображение'
     image_preview.allow_tags = True
 
 

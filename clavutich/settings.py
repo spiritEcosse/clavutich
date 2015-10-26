@@ -138,7 +138,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
-
 DEFAULT_FROM_EMAIL = local_settings.DEFAULT_FROM_EMAIL
 EMAIL_COMPANY = local_settings.EMAIL_COMPANY
 EMAIL_HOST_USER = local_settings.EMAIL_HOST_USER

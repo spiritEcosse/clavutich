@@ -1,3 +1,5 @@
+# --coding: utf-8--
+
 from catalog.models import Product, Category
 from django.views import generic
 from django.views.generic.detail import SingleObjectMixin
@@ -52,6 +54,7 @@ class ProductDetailView(generic.DetailView):
     template_name = 'catalog/product_detail.html'
 
     def get(self, request, *args, **kwargs):
+        # Fetch the product; return 404 or redirect as needed
         self.product = get_obj(self)
         potential_redirect = redirect_if_necessary(request.path, self.product)
 

@@ -26,7 +26,8 @@
             <div class="row">
                 <div class="col-sm-3">
                     {% thumbnail object.image "200x200" as im %}
-                        <a href="{{ object.image.url }}" class="pull-left">
+                        <a id="main" href="{{ object.image.url }}" class="pull-left highslide"
+                           onclick="return hs.expand(this, { slideshowGroup: 1, thumbnailId: 'main' } )">
                             <img src="{{ im.url }}" class="img-responsive img-rounded" alt="{{ title }}" title="{{ title }}">
                         </a>
                     {% endthumbnail %}

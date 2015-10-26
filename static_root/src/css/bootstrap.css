@@ -5274,6 +5274,10 @@ a.list-group-item-warning.active:focus {
   background-color: #8a6d3b;
   border-color: #8a6d3b;
 }
+.list-group-item-default {
+    background-color: #F8F8F8;
+    color: #777;
+}
 .list-group-item-danger {
   color: #a94442;
   background-color: #f2dede;

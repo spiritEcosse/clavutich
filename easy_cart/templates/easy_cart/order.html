@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block title %}Сделать заказ{% endblock %}
+{% block ngApp %}ng-app="easy_cart"{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="/">Главная</a></li>
+
+        <li class="active">Заказ</li>
+    </ol>
+{% endblock %}
+
+{% block main %}
+    {% include "easy_cart/products.html" %}
+{% endblock %}

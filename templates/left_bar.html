@@ -6,7 +6,7 @@
         <div id="MainMenu">
             <div class="list-group panel">
                 {% recursetree nodes %}
-                    {% with title=node.title|lower|capfirst|truncatechars:30 url=node.get_absolute_url %}
+                    {% with title=node.title|lower|capfirst|truncatechars:60 url=node.get_absolute_url %}
                         {% if not node.is_leaf_node %}
                             <a href="{{ url }}" class="list-group-item list-group-item-info" data-parent="#MainMenu">
                                 {{ title }} <i class="fa fa-caret-down"></i>

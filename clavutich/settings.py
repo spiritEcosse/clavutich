@@ -49,6 +49,8 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     'bootstrap_pagination',
     'djangular',
+    'cart',
+    'easy_cart',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -90,7 +92,6 @@ WSGI_APPLICATION = 'clavutich.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-
 DATABASES = {
     'default': {
         'ENGINE': local_settings.DB_BACKEND,
@@ -106,7 +107,7 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-RU'
 
 TIME_ZONE = 'UTC'
 

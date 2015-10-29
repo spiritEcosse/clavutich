@@ -10,7 +10,7 @@ class Category(MPTTModel):
     title = models.CharField(verbose_name=u'Название категории', max_length=200)
     parent = TreeForeignKey('self', verbose_name=u'Родительская категория', related_name='categories', blank=True, null=True,
                             db_index=True)
-    image = models.ImageField(verbose_name=u'Главное изображение', upload_to='images/catalog/category/%Y/%m/')
+    image = models.ImageField(verbose_name=u'Главное изображение', blank=True, upload_to='images/catalog/category/%Y/%m/')
     slug = models.SlugField(verbose_name=u'Ссылка', max_length=200, unique=True)
     description = models.TextField(verbose_name=u'Описание', blank=True)
     enable = models.BooleanField(verbose_name=u'Включено', default=True)
@@ -47,7 +47,8 @@ class Category(MPTTModel):
         return reverse('catalog:category', kwargs={'slug': self.full_slug()})
 
     def image_preview(self):
-        return u'<img style="max-width:100px; max-height:100px" src="%s" />' % self.image.url
+        if self.image:
+            return u'<img style="max-width:100px; max-height:100px" src="%s" />' % self.image.url
     image_preview.short_description = u'Изображение'
     image_preview.allow_tags = True
 

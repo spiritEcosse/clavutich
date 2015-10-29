@@ -19,7 +19,7 @@ app.controller 'MyFormCtrl', ['$http', '$scope', '$window', 'djangoForm', '$docu
         if not djangoForm.setErrors($scope.form_comment, data.errors)
           duration = 800
           offset = 100
-          $scope.alerts.push({msg: data.msg, type: 'success'})
+          $scope.alerts.unshift({msg: data.msg, type: 'success'})
           someElement = angular.element(document.getElementById('alerts'));
           $document.scrollToElement(someElement, offset, duration);
       .error ->

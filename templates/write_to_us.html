@@ -3,6 +3,14 @@
 
 {% block title %}Связаться с нами{% endblock %}
 
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="/">Главная</a></li>
+
+        <li class="active">Связаться с нами</li>
+    </ol>
+{% endblock %}
+
 {% block main %}
     <div class="col-xs-12" id="form" ng-controller="MyFormCtrl" ng-cloak>
         <h1>Связаться с нами</h1>
@@ -23,7 +31,7 @@
             {% csrf_token %}
             {{ form.as_div }}
             <div class="cBtn" >
-                <button id="comment_form" type="button" class="btn btn-primary" ng-disabled="disabled" ng-click="submit()">
+                <button id="comment_form" type="button" class="btn btn-primary" ng-init="disabled" ng-click="submit()">
                     <i class="fa fa-share"></i>
                     {% trans 'Send Message' %}
                 </button>

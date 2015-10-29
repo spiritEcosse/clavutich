@@ -6,6 +6,12 @@ from django.views.generic.detail import SingleObjectMixin
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponsePermanentRedirect, Http404
 from django.utils.http import urlquote
+from django.views.decorators.csrf import csrf_exempt
+from django.views.generic.detail import SingleObjectMixin
+from django.http import JsonResponse
+import json
+from cart import Cart
+from django.views.generic import View
 
 
 def get_obj(self):
@@ -30,7 +36,7 @@ def redirect_if_necessary(current_path, obj):
 
 class CategoryDetailView(SingleObjectMixin, generic.ListView):
     model = Category
-    paginate_by = 1
+    paginate_by = 24
     template_name = 'catalog/category_detail.html'
 
     def get(self, request, *args, **kwargs):
@@ -63,3 +69,44 @@ class ProductDetailView(generic.DetailView):
 
         self.kwargs['slug'] = self.product.slug
         return super(ProductDetailView, self).get(request, *args, **kwargs)
+
+
+class JSONResponseMixin(object):
+    """
+    A mixin that can be used to render a JSON response.
+    """
+    def render_to_json_response(self, context, **response_kwargs):
+        """
+        Returns a JSON response, transforming 'context' to make the payload.
+        """
+        return JsonResponse(
+            self.get_data(context),
+            **response_kwargs
+        )
+
+    def get_data(self, context):
+        """
+        Returns an object that will be serialized as JSON by json.dumps().
+        """
+        from django.core import serializers
+        # Note: This is *EXTREMELY* naive; in reality, you'll need
+        # to do much more complex handling to ensure that arbitrary
+        # objects -- such as Django model instances or querysets
+        # -- can be serialized as JSON.
+        return context
+
+
+class ProductAddToCart(SingleObjectMixin, JSONResponseMixin, View):
+    model = Product
+
+    @csrf_exempt
+    def post(self, request, *args, **kwargs):
+        del kwargs['pk']
+        self.object = self.get_object()
+        return self.render_to_json_response(self.get_context_data(**kwargs), **kwargs)
+
+    def get_context_data(self, **kwargs):
+        data = json.loads(self.request.body)
+        cart = Cart(self.request)
+        cart.add(self.object, 0, data.get('quantity'))
+        return {'msg': u'Товар в корзине'}

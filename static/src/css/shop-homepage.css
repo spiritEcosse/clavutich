@@ -138,6 +138,9 @@ body {
     padding: 9px;
     color: #333;
 }
+.cart {
+    margin-top: 10px;
+}
 
 footer {
     margin: 20px 0;

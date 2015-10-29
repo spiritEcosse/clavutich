@@ -71,4 +71,5 @@ def update_requirements():
     for host, dir_name in HOSTS:
         with settings(host_string=host):
             with cd(dir_name):
-                run('%s && %s%s' % ('source .env/bin/activate', 'pip install -r ', REQUIREMENTS_FILE))
+                run('apt-get install libjpeg-dev')
+                run('%s || %s%s' % ('source .env/bin/activate', 'pip install -r ', REQUIREMENTS_FILE))

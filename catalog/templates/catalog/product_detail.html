@@ -2,6 +2,7 @@
 {% load thumbnail %}
 
 {% block title %}{{ object.title|lower|capfirst }}{% endblock %}
+{% block ngApp %}ng-app="catalog"{% endblock %}
 
 {% block breadcrumbs %}
     <ol class="breadcrumb">
@@ -19,18 +20,36 @@
 {% block main %}
     {% include "left_bar.html" %}
 
-    <div class="col-md-9">
+    <div class="col-md-9" ng-controller="Product" ng-cloak>
         {% with object.title|lower|capfirst as title %}
             <h1>{{ title }}</h1>
 
+            {% verbatim alerts %}
+                <div id="alerts">
+                    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+                </div>
+            {% endverbatim alerts %}
+
             <div class="row">
                 <div class="col-sm-3">
-                    {% thumbnail object.image "200x200" as im %}
-                        <a id="main" href="{{ object.image.url }}" class="pull-left highslide"
-                           onclick="return hs.expand(this, { slideshowGroup: 1, thumbnailId: 'main' } )">
-                            <img src="{{ im.url }}" class="img-responsive img-rounded" alt="{{ title }}" title="{{ title }}">
-                        </a>
-                    {% endthumbnail %}
+                    <div class="row text-center">
+                        <div class="col-xs-12">
+                            {% thumbnail object.image "200x200" as im %}
+                                <a id="main" href="{{ object.image.url }}" class="pull-left highslide"
+                                   onclick="return hs.expand(this, { slideshowGroup: 1, thumbnailId: 'main' } )">
+                                    <img src="{{ im.url }}" class="img-responsive img-rounded" alt="{{ title }}" title="{{ title }}">
+                                </a>
+                            {% endthumbnail %}
+                        </div>
+                        <div class="col-xs-12 cart" >
+                            <form method="post" novalidate="novalidate" ng-init="action='{% url "catalog:add_to_cart" object.pk %}'" >
+                                <input type="number" ng-model="quantity" class="form-control" aria-label="Количество">
+                                <button class="btn btn-primary" id="comment_form" type="button" ng-model="disabled" ng-click="add_to_cart()">
+                                    В корзину
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="col-sm-9">

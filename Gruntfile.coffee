@@ -3,7 +3,11 @@ module.exports = (grunt) ->
     pkg: grunt.file.readJSON('package.json')
     coffee:
       files:
-        src: ['clavutich/src/coffee/**/*.coffee']
+        src: [
+          'clavutich/src/coffee/**/*.coffee',
+          'catalog/src/coffee/**/*.coffee',
+          'easy_cart/src/coffee/**/*.coffee',
+        ],
         dest: 'static/src/js/clavutich/src/js/script.js'
     min:
       dist:

@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^$', IndexView.as_view(), name='home'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^catalog/', include('catalog.urls', app_name='catalog', namespace='catalog')),
+    url(r'^cart/', include('easy_cart.urls', app_name='easy_cart', namespace='easy_cart')),
 ] + static(MEDIA_URL, document_root=MEDIA_ROOT)
 
 urlpatterns += [

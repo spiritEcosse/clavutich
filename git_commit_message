@@ -1,1 +1,1 @@
-remove cart from INSTALLED_APPS
+add cart to INSTALLED_APPS

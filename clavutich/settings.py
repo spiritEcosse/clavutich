@@ -48,8 +48,8 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     'bootstrap_pagination',
     'djangular',
-    # 'cart',
-    # 'easy_cart',
+    'cart',
+    'easy_cart',
     'ckeditor',
 )
 

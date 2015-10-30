@@ -4,6 +4,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from mptt.models import MPTTModel, TreeForeignKey
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class Category(MPTTModel):
@@ -12,7 +13,7 @@ class Category(MPTTModel):
                             db_index=True)
     image = models.ImageField(verbose_name=u'Главное изображение', blank=True, upload_to='images/catalog/category/%Y/%m/')
     slug = models.SlugField(verbose_name=u'Ссылка', max_length=200, unique=True)
-    description = models.TextField(verbose_name=u'Описание', blank=True)
+    description = RichTextUploadingField(verbose_name=u'Описание', blank=True)
     enable = models.BooleanField(verbose_name=u'Включено', default=True)
     date_create = models.DateTimeField(auto_now_add=True)
     date_last_modified = models.DateTimeField(auto_now=True)
@@ -55,10 +56,10 @@ class Category(MPTTModel):
 
 class Product(models.Model):
     title = models.CharField(verbose_name=u'Название продукта', max_length=200)
-    image = models.ImageField(verbose_name=u'Главное изображение', upload_to='images/catalog/product/%Y/%m/')
+    image = models.ImageField(verbose_name=u'Главное изображение', upload_to='images/catalog/product/%Y/%m/', null=True, blank=True)
     slug = models.SlugField(verbose_name=u'Ссылка', max_length=200, unique=True)
     category = models.ForeignKey('Category', verbose_name=u'Категория', related_name='products')
-    description = models.TextField(verbose_name=u'Описание')
+    description = RichTextUploadingField(verbose_name=u'Описание')
     enable = models.BooleanField(verbose_name=u'Включено', default=True)
     date_create = models.DateTimeField(auto_now_add=True)
     date_last_modified = models.DateTimeField(auto_now=True)
@@ -78,7 +79,8 @@ class Product(models.Model):
         return reverse('catalog:product', kwargs={'slug': self.slug, 'category_slug': self.category.full_slug()})
 
     def image_preview(self):
-        return u'<img style="max-width:100px; max-height:100px" src="%s" />' % self.image.url
+        if self.image:
+            return u'<img style="max-width:100px; max-height:100px" src="%s" />' % self.image.url
     image_preview.short_description = u'Изображение'
     image_preview.allow_tags = True
 

@@ -9,10 +9,10 @@
         <li><a href="/">Главная</a></li>
 
         {% for category in object.get_ancestors %}
-            <li><a href="{{ category.get_absolute_url }}">{{ category.title|lower|capfirst|truncatechars:30 }}</a></li>
+            <li><a href="{{ category.get_absolute_url }}">{{ category.title|lower|capfirst|truncatechars:80 }}</a></li>
         {% endfor %}
 
-        <li class="active">{{ object.title|lower|capfirst|truncatechars:30 }}</li>
+        <li class="active">{{ object.title|lower|capfirst|truncatechars:80 }}</li>
     </ol>
 {% endblock %}
 
@@ -46,7 +46,7 @@
 
                             <div class="caption">
                                 <h4><a href="{{ product.get_absolute_url }}">{{ title|truncatechars:30 }}</a></h4>
-                                <p>{{ product.description|truncatechars:80 }}</p>
+                                <p>{{ product.description|striptags|truncatechars:100 }}</p>
                             </div>
                         {% endwith %}
                     </div>
@@ -55,7 +55,9 @@
         </div>
 
         <div class="pagination">
-            {% bootstrap_paginate page_obj %}
+            {% if page_obj %}
+                {% bootstrap_paginate page_obj %}
+            {% endif %}
         </div>
     </div>
 {% endblock %}

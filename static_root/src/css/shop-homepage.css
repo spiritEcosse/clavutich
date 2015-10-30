@@ -115,7 +115,7 @@ body {
 }
 
 .caption {
-    height: 167px;
+    height: 186px;
     overflow: hidden;
 }
 
@@ -132,11 +132,15 @@ body {
 
 .thumbnail {
     padding: 4px;
+    height: 336px;
 }
 
 .thumbnail .caption-full {
     padding: 9px;
     color: #333;
+}
+.cart {
+    margin-top: 10px;
 }
 
 footer {

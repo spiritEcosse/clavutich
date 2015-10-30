@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^catalog/', include('catalog.urls', app_name='catalog', namespace='catalog')),
     url(r'^cart/', include('easy_cart.urls', app_name='easy_cart', namespace='easy_cart')),
+    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ] + static(MEDIA_URL, document_root=MEDIA_ROOT)
 
 urlpatterns += [

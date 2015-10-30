@@ -35,6 +35,7 @@ def remote_act():
                 run("git reset --hard")
                 run("kill -9 $(ps -ef|grep -v grep |grep '%s' | awk '{print $2}')" % PROJECT_NAME)
                 run("%s" % PROJECT_NAME)
+                run("./manage.py loaddata db.json")
 
 
 def local_act():
@@ -45,7 +46,7 @@ def local_act():
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "%s.settings" % PROJECT_NAME)
     activate_env = os.path.expanduser(os.path.join(BASE_DIR, ".env/bin/activate_this.py"))
     execfile(activate_env, dict(__file__=activate_env))
-    local("./manage.py test")
+    # local("./manage.py test")
     local("./manage.py makemigrations")
     local("./manage.py migrate")
     local("%s%s" % ('pip freeze > ', REQUIREMENTS_FILE))
@@ -72,4 +73,4 @@ def update_requirements():
         with settings(host_string=host):
             with cd(dir_name):
                 run('apt-get install libjpeg-dev')
-                run('%s || %s%s' % ('source .env/bin/activate', 'pip install -r ', REQUIREMENTS_FILE))
+                run('%s && %s%s' % ('source .env/bin/activate', 'pip install -r ', REQUIREMENTS_FILE))

@@ -7,3 +7,4 @@ clavutich/local_settings.py
 !/media/images/catalog/category/empty
 /media/images/catalog/product/**
 !/media/images/catalog/product/empty
+parse_html.py

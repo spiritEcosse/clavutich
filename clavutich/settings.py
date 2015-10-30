@@ -51,6 +51,7 @@ INSTALLED_APPS = (
     'djangular',
     'cart',
     'easy_cart',
+    'ckeditor',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -138,6 +139,16 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
+CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+CKEDITOR_UPLOAD_PATH = 'images/'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': 650,
+    },
+}
 
 DEFAULT_FROM_EMAIL = local_settings.DEFAULT_FROM_EMAIL
 EMAIL_COMPANY = local_settings.EMAIL_COMPANY

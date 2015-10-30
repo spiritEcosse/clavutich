@@ -3,20 +3,20 @@
 <div class="col-md-3">
     <p class="lead">Каталог</p>
     <nav class="navbar">
-        <div id="MainMenu">
+        <div id="None">
             <div class="list-group panel">
                 {% recursetree nodes %}
                     {% with title=node.title|lower|capfirst|truncatechars:60 url=node.get_absolute_url %}
                         {% if not node.is_leaf_node %}
-                            <a href="{{ url }}" class="list-group-item list-group-item-info" data-parent="#MainMenu">
+                            <a href="#cat_{{ node.pk }}" data-toggle="collapse" class="list-group-item list-group-item-info" data-parent="#cat_{{ node.parent.pk }}">
                                 {{ title }} <i class="fa fa-caret-down"></i>
                             </a>
 
-                            <div class="collapse in list-group-submenu" aria-labelledby="cat_{{ forloop.counter }}" id="cat_{{ forloop.counter }}">
+                            <div class="collapse list-group-submenu" aria-labelledby="cat_{{ node.pk }}" id="cat_{{ node.pk }}">
                                 {{ children }}
                             </div>
                         {% else %}
-                            <a href="{{ url }}" class="list-group-item list-group-item-info" data-parent="#MainMenu">
+                            <a href="{{ url }}" class="list-group-item list-group-item-default" data-parent="#cat_{{ node.parent.pk }}">
                                 {{ title }}
                             </a>
                         {% endif %}

@@ -1,7 +1,7 @@
 __author__ = 'igor'
 
 
-from fabric.api import local, run, cd, settings
+from fabric.api import local, prefix, run, cd, settings
 import os
 from clavutich.settings import BASE_DIR, PROJECT_NAME
 from fabric.state import env
@@ -49,7 +49,8 @@ def local_act():
     # local("./manage.py test")
     local("./manage.py makemigrations")
     local("./manage.py migrate")
-    local("%s%s" % ('pip freeze > ', REQUIREMENTS_FILE))
+    local('pip freeze ' + REQUIREMENTS_FILE)
+    # local("%s && %s%s" % ('source .env/bin/activate', 'pip freeze > ', REQUIREMENTS_FILE))
     local("./manage.py collectstatic --noinput")
     local("git add .")
     local("git commit -a -F git_commit_message")

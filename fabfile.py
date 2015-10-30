@@ -33,7 +33,9 @@ def remote_act():
         with settings(host_string=host):
             with cd(dir_name):
                 run("git reset --hard")
-                run("kill -9 $(ps -ef|grep -v grep |grep '%s' | awk '{print $2}')" % PROJECT_NAME)
+                pid = run("ps -ef|grep -v grep |grep '%s' | awk '{print $2}'" % PROJECT_NAME, capture=True)
+                if pid:
+                    run("kill -9 %d" % pid, capture=True)
                 run("%s" % PROJECT_NAME)
                 run("./manage.py loaddata db.json")
 

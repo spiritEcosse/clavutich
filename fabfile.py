@@ -53,16 +53,19 @@ def local_act():
     # local("%s && %s%s" % ('source .env/bin/activate', 'pip freeze > ', REQUIREMENTS_FILE))
     local("./manage.py collectstatic --noinput")
     local("git add .")
-    local("git commit -a -F git_commit_message")
-    current_branch = local("git symbolic-ref --short -q HEAD", capture=True)
+    status = local("git status -s", capture=True)
+    
+    if status:
+        local("git commit -a -F git_commit_message")
+        current_branch = local("git symbolic-ref --short -q HEAD", capture=True)
 
-    if current_branch != 'master':
-        local("git checkout master")
-        local("git merge %s" % current_branch)
-        local("git branch -d %s" % current_branch)
+        if current_branch != 'master':
+            local("git checkout master")
+            local("git merge %s" % current_branch)
+            local("git branch -d %s" % current_branch)
 
-    local("git push bit")
-    local("git push production")
+        local("git push bit")
+        local("git push production")
 
 
 def update_requirements():

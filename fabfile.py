@@ -77,5 +77,3 @@ def update_requirements():
             with cd(dir_name):
                 with prefix('source .env/bin/activate'):
                     run('pip install -r %s' % REQUIREMENTS_FILE)
-
-

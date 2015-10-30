@@ -1,1 +1,1 @@
-clear 0001_initial migrate
+remove cart from INSTALLED_APPS

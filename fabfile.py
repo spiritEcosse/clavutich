@@ -32,15 +32,15 @@ def remote_act():
     for host, dir_name in HOSTS:
         with settings(host_string=host):
             with cd(dir_name):
+                run("git reset --hard")
                 with prefix('source .env/bin/activate'):
-                    run("git reset --hard")
-                    pid = run("ps -ef|grep -v grep |grep '%s' | awk '{print $2}'" % PROJECT_NAME)
-                    if pid:
-                        run("kill -9 %s" % pid)
-                    run("./manage.py makemigrations")
                     run("./manage.py migrate")
                     run("./manage.py loaddata db.json")
-                    run("%s" % PROJECT_NAME)
+
+                pid = run("ps -ef|grep -v grep |grep '%s' | awk '{print $2}'" % PROJECT_NAME)
+                if pid:
+                    run("kill -9 %s" % pid)
+                run("%s" % PROJECT_NAME)
 
 
 def local_act():
@@ -54,8 +54,8 @@ def local_act():
     # local("./manage.py test")
     local("./manage.py makemigrations")
     local("./manage.py migrate")
+    local("./manage.py dumpdata --exclude=contenttypes > db.json")
     local('pip freeze > ' + REQUIREMENTS_FILE)
-    # local("%s && %s%s" % ('source .env/bin/activate', 'pip freeze > ', REQUIREMENTS_FILE))
     local("./manage.py collectstatic --noinput")
     local("git add .")
     status = local("git status -s", capture=True)

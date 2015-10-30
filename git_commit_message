@@ -1,1 +1,1 @@
-add source env activate
+delete django-pipeline

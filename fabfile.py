@@ -32,12 +32,13 @@ def remote_act():
     for host, dir_name in HOSTS:
         with settings(host_string=host):
             with cd(dir_name):
-                run("git reset --hard")
-                pid = run("ps -ef|grep -v grep |grep '%s' | awk '{print $2}'" % PROJECT_NAME)
-                if pid:
-                    run("kill -9 %d" % pid)
-                run("%s" % PROJECT_NAME)
-                run("./manage.py loaddata db.json")
+                with prefix('source .env/bin/activate'):
+                    run("git reset --hard")
+                    pid = run("ps -ef|grep -v grep |grep '%s' | awk '{print $2}'" % PROJECT_NAME)
+                    if pid:
+                        run("kill -9 %d" % pid)
+                    run("./manage.py loaddata db.json")
+                    run("%s" % PROJECT_NAME)
 
 
 def local_act():

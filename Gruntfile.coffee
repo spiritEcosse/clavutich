@@ -37,5 +37,5 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-yui-compressor')
 
-  grunt.registerTask('default', ['coffee'])
+  grunt.registerTask('default', ['coffee', 'min', 'cssmin'])
 

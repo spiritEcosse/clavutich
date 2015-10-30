@@ -1,7 +1,7 @@
 __author__ = 'igor'
 
 
-from fabric.api import local, prefix, run, cd, settings
+from fabric.api import local, prefix, run, cd, settings, put
 import os
 from clavutich.settings import BASE_DIR, PROJECT_NAME
 from fabric.state import env
@@ -9,10 +9,10 @@ from clavutich.local_settings import HOSTS
 env.user = 'root'
 env.skip_bad_hosts = True
 env.warn_only = False
-env.parallel = True
+env.parallel = False
 env.shell = "/bin/bash -l -i -c"
 REQUIREMENTS_FILE = 'requirements.txt'
-
+media = 'media/'
 
 def deploy():
     """
@@ -51,6 +51,13 @@ def local_act():
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "%s.settings" % PROJECT_NAME)
     activate_env = os.path.expanduser(os.path.join(BASE_DIR, ".env/bin/activate_this.py"))
     execfile(activate_env, dict(__file__=activate_env))
+
+    # for host, dir_name in HOSTS:
+    #     with settings(host_string=host):
+    #         with cd(dir_name):
+    #             run('mkdir -p %s' % media)
+    #             put(os.path.join(BASE_DIR, media), dir_name)
+    #
     # local("./manage.py test")
     local("./manage.py makemigrations")
     local("./manage.py migrate")

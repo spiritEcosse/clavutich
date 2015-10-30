@@ -37,6 +37,7 @@ def remote_act():
                     pid = run("ps -ef|grep -v grep |grep '%s' | awk '{print $2}'" % PROJECT_NAME)
                     if pid:
                         run("kill -9 %s" % pid)
+                    run("./manage.py migrate")
                     run("./manage.py loaddata db.json")
                     run("%s" % PROJECT_NAME)
 

@@ -49,12 +49,12 @@ def local_act():
     # local("./manage.py test")
     local("./manage.py makemigrations")
     local("./manage.py migrate")
-    local('pip freeze ' + REQUIREMENTS_FILE)
+    local('pip freeze > ' + REQUIREMENTS_FILE)
     # local("%s && %s%s" % ('source .env/bin/activate', 'pip freeze > ', REQUIREMENTS_FILE))
     local("./manage.py collectstatic --noinput")
     local("git add .")
     status = local("git status -s", capture=True)
-    
+
     if status:
         local("git commit -a -F git_commit_message")
         current_branch = local("git symbolic-ref --short -q HEAD", capture=True)

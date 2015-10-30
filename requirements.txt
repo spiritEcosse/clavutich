@@ -19,7 +19,6 @@ Fabric==1.10.2
 feedparser==5.2.1
 FeinCMS==1.11.1
 futures==3.0.3
-lxml==3.4.4
 paramiko==1.15.3
 Pillow==3.0.0
 psycopg2==2.6.1

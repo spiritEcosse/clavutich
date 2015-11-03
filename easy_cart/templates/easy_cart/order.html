@@ -13,5 +13,21 @@
 {% endblock %}
 
 {% block main %}
-    {% include "easy_cart/products.html" %}
+    <div ng-cloak ng-controller="Products" >
+        <div ng-show="cart_show"></div>
+        {% include "easy_cart/products.html" %}
+
+        <div ng-cloak class="col-xs-12" ng-show="products.length">
+            <form name="{{ form.form_name }}" method="post" novalidate="novalidate" action=".">
+                {% csrf_token %}
+                {{ form.as_div }}
+                <div class="cBtn" >
+                    <button id="comment_form" type="button" class="btn btn-primary" ng-disabled="disabled_form" ng-click="submit()">
+                        <i class="fa fa-share"></i>
+                        Подтвердить заказ
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 {% endblock %}

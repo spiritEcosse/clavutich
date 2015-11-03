@@ -13,11 +13,11 @@
 {% endblock %}
 
 {% block main %}
-    {% include "easy_cart/products.html" %}
+    <div ng-cloak ng-controller="Products" >
+        {% include "easy_cart/products.html" %}
 
-    {% if cart.count %}
-        <div class="col-xs-12" id="btn-checkout">
-            <button class="btn pull-right btn-primary">Оформить заказ</button>
+        <div ng-cloak class="col-xs-12" ng-show="products.length">
+            <a class="btn pull-right btn-primary" href="{% url 'easy_cart:order' %}">Оформить заказ</a>
         </div>
-    {% endif %}
+    </div>
 {% endblock %}

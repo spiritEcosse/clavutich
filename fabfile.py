@@ -59,6 +59,7 @@ def local_act():
     #             put(os.path.join(BASE_DIR, media), dir_name)
     #
     # local("./manage.py test")
+    local("grunt default")
     local("./manage.py makemigrations")
     local("./manage.py migrate")
     local("./manage.py dumpdata --exclude=contenttypes --indent 4 > db.json")

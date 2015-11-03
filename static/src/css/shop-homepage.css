@@ -142,7 +142,11 @@ body {
 .cart {
     margin-top: 10px;
 }
-
+.product {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
 footer {
     margin: 20px 0;
 }

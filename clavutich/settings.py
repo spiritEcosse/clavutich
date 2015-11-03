@@ -41,6 +41,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.flatpages',
     'debug_toolbar',
+    'cart',
+    'easy_cart',
     'catalog',
     'mptt',
     'feincms',
@@ -48,11 +50,8 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     'bootstrap_pagination',
     'djangular',
-    'cart',
-    'easy_cart',
     'ckeditor',
 )
-
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -83,6 +82,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'clavutich.template.context_processors.context_data',
+                'django.core.context_processors.request',
                 ],
             },
         },
@@ -117,11 +117,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.template.context_processors.request',
-    'django.core.context_processors.request',
-)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/

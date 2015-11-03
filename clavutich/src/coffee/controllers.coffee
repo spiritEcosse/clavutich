@@ -6,26 +6,27 @@ app_name = "clavutich"
 app = angular.module "#{app_name}.controllers", []
 
 app.controller 'MyFormCtrl', ['$http', '$scope', '$window', 'djangoForm', '$document', ($http, $scope, $window, djangoForm, $document) ->
-  $scope.alerts = [];
+  $scope.alerts = []
+  duration = 800
+  offset = 100
+  alerts = angular.element(document.getElementById('alerts'));
+  $scope.disabled_form = false
 
   $scope.closeAlert = (index) ->
     $scope.alerts.splice(index, 1)
 
   $scope.submit = ->
-    $scope.disabled = true
+    $scope.disabled_form = true
 
     if $scope.feedback
       $http.post(".", $scope.feedback).success (data) ->
         if not djangoForm.setErrors($scope.form_comment, data.errors)
-          duration = 800
-          offset = 100
           $scope.alerts.unshift({msg: data.msg, type: 'success'})
-          someElement = angular.element(document.getElementById('alerts'));
-          $document.scrollToElement(someElement, offset, duration);
+          $document.scrollToElement(alerts, offset, duration)
+        $scope.disabled_form = false
       .error ->
         console.error('An error occurred during submission')
 
-    $scope.disabled = false
     return false
 ]
 app.directive 'alertSuccess', ['$scope', ($scope) ->

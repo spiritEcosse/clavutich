@@ -1,0 +1,22 @@
+<b>Дата заказа: </b><time>{% now 'd.m.Y' %}</time>
+<br/>
+<br/>
+
+<table style="border-collapse:collapse;width:100%;border-top:1px solid #dddddd;border-left:1px solid #dddddd;margin-bottom:20px">
+    <thead>
+    <tr>
+        <td style="font-size:12px;border-right:1px solid #dddddd;border-bottom:1px solid #dddddd;background-color:#efefef;text-align:left;padding:7px;color:#222222"><strong>#</strong></td>
+        <td style="font-size:12px;border-right:1px solid #dddddd;border-bottom:1px solid #dddddd;background-color:#efefef;text-align:left;padding:7px;color:#222222"><strong>Название</strong></td>
+        <td style="font-size:12px;border-right:1px solid #dddddd;border-bottom:1px solid #dddddd;background-color:#efefef;text-align:left;padding:7px;color:#222222"><strong>Количество</strong></td>
+    </tr>
+    </thead>
+    <tbody>
+    {% for product in products %}
+        <tr>
+            <td style="font-size:12px;border-right:1px solid #dddddd;border-bottom:1px solid #dddddd;text-align:left;padding:7px">{{ forloop.counter }}</td>
+            <td style="font-size:12px;border-right:1px solid #dddddd;border-bottom:1px solid #dddddd;text-align:left;padding:7px">{{ product.title }}</td>
+            <td style="font-size:12px;border-right:1px solid #dddddd;border-bottom:1px solid #dddddd;text-align:left;padding:7px">{{ product.quantity }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

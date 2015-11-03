@@ -31,9 +31,9 @@
             {% csrf_token %}
             {{ form.as_div }}
             <div class="cBtn" >
-                <button id="comment_form" type="button" class="btn btn-primary" ng-init="disabled" ng-click="submit()">
+                <button id="comment_form" type="button" class="btn btn-primary" ng-disabled="disabled_form" ng-click="submit()">
                     <i class="fa fa-share"></i>
-                    {% trans 'Send Message' %}
+                    Отправить сообщение
                 </button>
             </div>
         </form>

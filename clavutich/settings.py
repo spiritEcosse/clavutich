@@ -24,7 +24,7 @@ PROJECT_NAME = os.path.basename(BASE_DIR)
 SECRET_KEY = '5llx!o977!7709jq8o*by2d&ib_d9uggf%0y9!ga7shoe-eypv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 

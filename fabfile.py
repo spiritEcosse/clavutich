@@ -64,7 +64,7 @@ def local_act():
     local("./manage.py migrate")
     local("./manage.py dumpdata --exclude=contenttypes --indent 4 > db.json")
     local('pip freeze > ' + REQUIREMENTS_FILE)
-    local("./manage.py collectstatic --noinput")
+    local("./manage.py collectstatic --noinput -c")
     local("git add .")
     status = local("git status -s", capture=True)
 

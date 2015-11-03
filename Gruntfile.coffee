@@ -16,6 +16,7 @@ module.exports = (grunt) ->
           'static/bower_components/bootstrap/dist/js/bootstrap.min.js',
           'static/bower_components/angular/angular.min.js',
           'static/bower_components/angular-animate/angular-animate.min.js',
+          'static/bower_components/bootstrap-checkbox/dist/js/bootstrap-checkbox.js',
           'static/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
           'static/bower_components/angular-scroll/angular-scroll.min.js',
           'static_root/djangular/js/django-angular.js',

@@ -14,13 +14,14 @@ env.shell = "/bin/bash -l -i -c"
 REQUIREMENTS_FILE = 'requirements.txt'
 media = 'media/'
 
+
 def deploy():
     """
     deploy project on remote server
     :return:
     """
     local_act()
-    update_requirements()
+    # update_requirements()
     remote_act()
 
 
@@ -37,8 +38,9 @@ def remote_act():
                     run("./manage.py migrate")
                     run("./manage.py loaddata db.json")
 
-                pid = run("ps -ef|grep -v grep |grep '%s' | awk '{print $2}'" % PROJECT_NAME)
-                if pid:
+                pids = run("ps -ef|grep -v grep |grep '%s' | awk '{print $2}'" % PROJECT_NAME)
+
+                for pid in pids.split():
                     run("kill -9 %s" % pid)
                 run("%s" % PROJECT_NAME)
 

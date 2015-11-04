@@ -3,6 +3,7 @@
 <head>
     {% load staticfiles %}
     {% load mptt_tags %}
+    {% load thumbnail %}
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -109,61 +110,33 @@
         </div>
 
         {% block main %}
-            <div class="col-lg-12">
-                <h3>Latest Features</h3>
-            </div>
-
-            <div class="row text-center">
-                <div class="col-md-3 col-sm-6 hero-feature">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/800x500" alt="">
-                        <div class="caption">
-                            <h3>Feature Label</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                            <p>
-                                <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
-                            </p>
-                        </div>
-                    </div>
+            <div class="col-xs-12">
+                <h1>Clavutich</h1>
+                <div class="col-lg-12">
+                    <h3>Последние товары</h3>
                 </div>
 
-                <div class="col-md-3 col-sm-6 hero-feature">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/800x500" alt="">
-                        <div class="caption">
-                            <h3>Feature Label</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                            <p>
-                                <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
-                            </p>
+                <div class="row text-center">
+                    {% for product in products %}
+                        <div class="col-md-3 col-sm-6 hero-feature">
+                            <div class="thumbnail">
+                                {% thumbnail product.image "800x400" crop="center" as im %}
+                                    <a href="{{ product.get_absolute_url }}">
+                                        <img src="{{ im.url }}" class="img-responsive img-rounded" title="{{ title }}" alt="{{ title }}">
+                                    </a>
+                                {% endthumbnail %}
+                                <div class="caption">
+                                    <a href="{{ product.get_absolute_url }}">
+                                        <h3>{{ product.title|capfirst|truncatechars:30 }}</h3>
+                                    </a>
+                                    <p>{{ product.description|striptags|truncatechars:50 }}</p>
+                                    <p>
+                                        <a href="{{ product.get_absolute_url }}" class="btn btn-default">Детальнее</a>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3 col-sm-6 hero-feature">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/800x500" alt="">
-                        <div class="caption">
-                            <h3>Feature Label</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                            <p>
-                                <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3 col-sm-6 hero-feature">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/800x500" alt="">
-                        <div class="caption">
-                            <h3>Feature Label</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                            <p>
-                                <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
-                            </p>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         {% endblock %}

@@ -34,7 +34,7 @@
                 <div class="col-sm-3">
                     <div class="row text-center">
                         <div class="col-xs-12">
-                            {% thumbnail object.image "200x200" as im %}
+                            {% thumbnail object.image "200x200" crop="center" as im %}
                                 <a id="main" href="{{ object.image.url }}" class="pull-left highslide"
                                    onclick="return hs.expand(this, { slideshowGroup: 1, thumbnailId: 'main' } )">
                                     <img src="{{ im.url }}" class="img-responsive img-rounded" alt="{{ title }}" title="{{ title }}">
@@ -44,7 +44,7 @@
                         <div class="col-xs-12 cart" >
                             <form method="post" novalidate="novalidate" ng-init="action='{% url "catalog:add_to_cart" object.pk %}'" >
                                 <input type="number" ng-model="quantity" class="form-control" aria-label="Количество">
-                                <button class="btn btn-primary" id="comment_form" type="button" ng-model="disabled" ng-click="add_to_cart()">
+                                <button class="btn btn-primary" id="comment_form" type="button" ng-disabled="disabled" ng-click="add_to_cart()">
                                     В корзину
                                 </button>
                             </form>

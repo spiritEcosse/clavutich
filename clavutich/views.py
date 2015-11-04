@@ -10,10 +10,16 @@ import json
 from django.core.mail import send_mail
 from django.http import HttpResponse
 from clavutich.settings import EMAIL_COMPANY
+from catalog.models import Product
 
 
 class IndexView(TemplateView):
     template_name = 'base.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        context['products'] = Product.objects.order_by('-date_last_modified')[:40]
+        return context
 
 
 class FeedbackForm(NgModelFormMixin, Feedback):
@@ -35,7 +41,7 @@ class WriteToUsView(FormView, ContextMixin):
         response_data = {'errors': form.errors}
 
         if not form.errors:
-            send_mail(u'Вы получили письмо c сайта %s' % request.META['HTTP_HOST'],
+            send_mail(u'Вы получили письмо c сайта %s' % self.request.get_host(),
                       u'Электронная почта: %s .\nКомментарий: %s' %
                       (form.cleaned_data['email'], form.cleaned_data['comment']),
                       form.cleaned_data['email'], [EMAIL_COMPANY],

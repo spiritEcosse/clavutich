@@ -24,7 +24,7 @@
 
         <div class="row">
             <div class="col-sm-3">
-                {% thumbnail object.image "200x200" as im %}
+                {% thumbnail object.image "200x200" crop="center" as im %}
                     <img src="{{ im.url }}" class="img-responsive img-rounded" alt="{{ title }}" title="{{ title }}">
                 {% endthumbnail %}
             </div>
@@ -33,12 +33,12 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row text-center">
             {% for product in page_obj %}
                 <div class="col-sm-4 col-lg-4 col-md-4">
                     <div class="thumbnail">
                         {% with product.title|lower|capfirst as title %}
-                            {% thumbnail product.image "150x150" as im %}
+                            {% thumbnail product.image "320x150" crop="center" as im %}
                                 <a href="{{ product.get_absolute_url }}">
                                     <img src="{{ im.url }}" class="img-responsive img-rounded" title="{{ title }}" alt="{{ title }}">
                                 </a>
@@ -46,7 +46,8 @@
 
                             <div class="caption">
                                 <h4><a href="{{ product.get_absolute_url }}">{{ title|truncatechars:30 }}</a></h4>
-                                <p>{{ product.description|striptags|truncatechars:100 }}</p>
+                                <p>{{ product.description|striptags|truncatechars:50 }}</p>
+                                <p><a href="{{ product.get_absolute_url }}" class="btn btn-default">Детальнее</a></p>
                             </div>
                         {% endwith %}
                     </div>

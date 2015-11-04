@@ -3,7 +3,6 @@ from django.contrib import admin
 from clavutich.views import IndexView, WriteToUsView
 from clavutich.settings import MEDIA_ROOT, MEDIA_URL
 from django.conf.urls.static import static
-from clavutich import settings
 from django.contrib.flatpages import views
 
 urlpatterns = [

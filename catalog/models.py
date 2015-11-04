@@ -5,13 +5,16 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from mptt.models import MPTTModel, TreeForeignKey
 from ckeditor_uploader.fields import RichTextUploadingField
+from util import models
+from clavutich import settings
 
 
 class Category(MPTTModel):
     title = models.CharField(verbose_name=u'Название категории', max_length=200)
     parent = TreeForeignKey('self', verbose_name=u'Родительская категория', related_name='categories', blank=True, null=True,
                             db_index=True)
-    image = models.ImageField(verbose_name=u'Главное изображение', blank=True, upload_to='images/catalog/category/%Y/%m/')
+    image = models.ImageField(verbose_name=u'Главное изображение', blank=True, upload_to='images/catalog/category/%Y/%m/',
+                              default=settings.IMAGE_NOT_FOUND)
     slug = models.SlugField(verbose_name=u'Ссылка', max_length=200, unique=True)
     description = RichTextUploadingField(verbose_name=u'Описание', blank=True)
     enable = models.BooleanField(verbose_name=u'Включено', default=True)
@@ -56,7 +59,8 @@ class Category(MPTTModel):
 
 class Product(models.Model):
     title = models.CharField(verbose_name=u'Название продукта', max_length=200)
-    image = models.ImageField(verbose_name=u'Главное изображение', upload_to='images/catalog/product/%Y/%m/', null=True, blank=True)
+    image = models.ImageField(verbose_name=u'Главное изображение', upload_to='images/catalog/product/%Y/%m/', null=True,
+                              blank=True, default=settings.IMAGE_NOT_FOUND)
     slug = models.SlugField(verbose_name=u'Ссылка', max_length=200, unique=True)
     category = models.ForeignKey('Category', verbose_name=u'Категория', related_name='products')
     description = RichTextUploadingField(verbose_name=u'Описание')

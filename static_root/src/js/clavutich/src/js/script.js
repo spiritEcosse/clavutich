@@ -96,8 +96,12 @@
 
   app.controller('Product', [
     '$http', '$scope', '$window', '$document', function($http, $scope, $window, $document) {
+      var alerts, duration, offset;
       $scope.alerts = [];
       $scope.quantity = 1;
+      duration = 800;
+      offset = 100;
+      alerts = angular.element(document.getElementById('alerts'));
       $scope.closeAlert = function(index) {
         return $scope.alerts.splice(index, 1);
       };
@@ -109,19 +113,15 @@
         $http.post($scope.action, {
           quantity: $scope.quantity
         }).success(function(data) {
-          var alerts, duration, offset;
-          duration = 800;
-          offset = 100;
           $scope.alerts.unshift({
             msg: data.msg,
             type: 'success'
           });
-          alerts = angular.element(document.getElementById('alerts'));
-          return $document.scrollToElement(alerts, offset, duration);
+          $document.scrollToElement(alerts, offset, duration);
+          return $scope.disabled = false;
         }).error(function() {
           return console.error('An error occurred during submission');
         });
-        $scope.disabled = false;
         return false;
       };
     }

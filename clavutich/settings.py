@@ -25,7 +25,7 @@ SECRET_KEY = '5llx!o977!7709jq8o*by2d&ib_d9uggf%0y9!ga7shoe-eypv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = local_settings.DEBUG
-THUMBNAIL_DEBUG = DEBUG
+THUMBNAIL_DEBUG = local_settings.THUMBNAIL_DEBUG
 ALLOWED_HOSTS = ['*']
 
 
@@ -145,6 +145,7 @@ CKEDITOR_CONFIGS = {
     },
 }
 
+IMAGE_NOT_FOUND = 'images/image_not_found.jpg'
 ADMINS = (('igor', 'shevchenkcoigor@gmail.com'),)
 DEFAULT_FROM_EMAIL = local_settings.DEFAULT_FROM_EMAIL
 EMAIL_COMPANY = local_settings.EMAIL_COMPANY

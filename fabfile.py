@@ -36,7 +36,7 @@ def remote_act():
                 run("git reset --hard")
                 with prefix('source .env/bin/activate'):
                     run("./manage.py migrate")
-                    run("./manage.py loaddata db.json")
+                    # run("./manage.py loaddata db.json")
                     run('pip install git+git://github.com/python-imaging/Pillow.git')
 
                 pids = run("ps -ef|grep -v grep |grep '%s' | awk '{print $2}'" % PROJECT_NAME)
@@ -65,7 +65,7 @@ def local_act():
     local("grunt default")
     local("./manage.py makemigrations")
     local("./manage.py migrate")
-    local("./manage.py dumpdata --exclude=contenttypes --indent 4 > db.json")
+    # local("./manage.py dumpdata --exclude=contenttypes --indent 4 > db.json")
     local('pip freeze > ' + REQUIREMENTS_FILE)
     local("./manage.py collectstatic --noinput -c")
     local("git add .")
@@ -92,6 +92,7 @@ def update_requirements():
     for host, dir_name in HOSTS:
         with settings(host_string=host):
             # run('apt-get install libjpeg-dev')
+            # run('pip install PIL --allow-external PIL --allow-unverified PIL')
 
             with cd(dir_name):
                 with prefix('source .env/bin/activate'):

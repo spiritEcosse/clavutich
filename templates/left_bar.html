@@ -12,7 +12,7 @@
                                 {{ title }} <i class="fa fa-caret-down"></i>
                             </a>
 
-                            <div class="collapse list-group-submenu" aria-labelledby="cat_{{ node.pk }}" id="cat_{{ node.pk }}">
+                            <div class="collapse {% if node in category.get_ancestors %}in{% endif %} list-group-submenu" aria-labelledby="cat_{{ node.pk }}" id="cat_{{ node.pk }}">
                                 {{ children }}
                             </div>
                         {% else %}

@@ -54,6 +54,11 @@ class CategoryDetailView(SingleObjectMixin, generic.ListView):
     def get_queryset(self):
         return self.object.products.all()
 
+    def get_context_data(self, **kwargs):
+        context = super(CategoryDetailView, self).get_context_data(**kwargs)
+        context['category'] = self.object
+        return context
+
 
 class ProductDetailView(generic.DetailView):
     model = Product
@@ -69,6 +74,11 @@ class ProductDetailView(generic.DetailView):
 
         self.kwargs['slug'] = self.product.slug
         return super(ProductDetailView, self).get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductDetailView, self).get_context_data(**kwargs)
+        context['category'] = self.object.category
+        return context
 
 
 class JSONResponseMixin(object):

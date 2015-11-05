@@ -35,7 +35,7 @@ def remote_act():
             with cd(dir_name):
                 run("git reset --hard")
                 with prefix('source .env/bin/activate'):
-                    run("./manage.py migrate")
+                    # run("./manage.py migrate")
                     # run("./manage.py loaddata db.json")
                     run('pip install git+git://github.com/python-imaging/Pillow.git')
 

@@ -1,4 +1,4 @@
-#!/home/igor/web/www/clavutich/.env/bin/python2.7
+#!/home/igor/web/www/clavutich/.env/bin/python
 """PILdriver, an image-processing calculator using PIL.
 
 An instance of class PILDriver is essentially a software stack machine
@@ -48,12 +48,10 @@ of its upper-left-hand corner and displays the cropped portion.
 # 3. Add support for composing and decomposing multiple-image files.
 #
 
-from __future__ import print_function
-
 from PIL import Image
+import string
 
-
-class PILDriver(object):
+class PILDriver:
 
     verbose = 0
 
@@ -62,7 +60,7 @@ class PILDriver(object):
 
         Set verbosity flag from top of stack.
         """
-        self.verbose = int(self.do_pop())
+        self.verbose = self.do_pop()
 
     # The evaluation stack (internal only)
 
@@ -207,8 +205,8 @@ class PILDriver(object):
 
         Process the top image with the given filter.
         """
-        from PIL import ImageFilter
-        filter = eval("ImageFilter." + self.do_pop().upper())
+        import ImageFilter
+        filter = eval("ImageFilter." + string.upper(self.do_pop()))
         image = self.do_pop()
         self.push(image.filter(filter))
 
@@ -316,7 +314,7 @@ class PILDriver(object):
 
         Transpose the top image.
         """
-        transpose = self.do_pop().upper()
+        transpose = string.upper(self.do_pop())
         image = self.do_pop()
         self.push(image.transpose(transpose))
 
@@ -327,21 +325,21 @@ class PILDriver(object):
 
         Push the format of the top image onto the stack.
         """
-        self.push(self.do_pop().format)
+        self.push(self.pop().format)
 
     def do_mode(self):
         """usage: mode <image:pic1>
 
         Push the mode of the top image onto the stack.
         """
-        self.push(self.do_pop().mode)
+        self.push(self.pop().mode)
 
     def do_size(self):
         """usage: size <image:pic1>
 
         Push the image size on the stack as (y, x).
         """
-        size = self.do_pop().size
+        size = self.pop().size
         self.push(size[0])
         self.push(size[1])
 
@@ -352,7 +350,7 @@ class PILDriver(object):
 
         Invert the top image.
         """
-        from PIL import ImageChops
+        import ImageChops
         self.push(ImageChops.invert(self.do_pop()))
 
     def do_lighter(self):
@@ -360,7 +358,7 @@ class PILDriver(object):
 
         Pop the two top images, push an image of the lighter pixels of both.
         """
-        from PIL import ImageChops
+        import ImageChops
         image1 = self.do_pop()
         image2 = self.do_pop()
         self.push(ImageChops.lighter(image1, image2))
@@ -370,7 +368,7 @@ class PILDriver(object):
 
         Pop the two top images, push an image of the darker pixels of both.
         """
-        from PIL import ImageChops
+        import ImageChops
         image1 = self.do_pop()
         image2 = self.do_pop()
         self.push(ImageChops.darker(image1, image2))
@@ -380,7 +378,7 @@ class PILDriver(object):
 
         Pop the two top images, push the difference image
         """
-        from PIL import ImageChops
+        import ImageChops
         image1 = self.do_pop()
         image2 = self.do_pop()
         self.push(ImageChops.difference(image1, image2))
@@ -390,7 +388,7 @@ class PILDriver(object):
 
         Pop the two top images, push the multiplication image.
         """
-        from PIL import ImageChops
+        import ImageChops
         image1 = self.do_pop()
         image2 = self.do_pop()
         self.push(ImageChops.multiply(image1, image2))
@@ -400,7 +398,7 @@ class PILDriver(object):
 
         Pop the two top images, superimpose their inverted versions.
         """
-        from PIL import ImageChops
+        import ImageChops
         image2 = self.do_pop()
         image1 = self.do_pop()
         self.push(ImageChops.screen(image1, image2))
@@ -410,7 +408,7 @@ class PILDriver(object):
 
         Pop the two top images, produce the scaled sum with offset.
         """
-        from PIL import ImageChops
+        import ImageChops
         image1 = self.do_pop()
         image2 = self.do_pop()
         scale = float(self.do_pop())
@@ -422,7 +420,7 @@ class PILDriver(object):
 
         Pop the two top images, produce the scaled difference with offset.
         """
-        from PIL import ImageChops
+        import ImageChops
         image1 = self.do_pop()
         image2 = self.do_pop()
         scale = float(self.do_pop())
@@ -436,7 +434,7 @@ class PILDriver(object):
 
         Enhance color in the top image.
         """
-        from PIL import ImageEnhance
+        import ImageEnhance
         factor = float(self.do_pop())
         image = self.do_pop()
         enhancer = ImageEnhance.Color(image)
@@ -447,10 +445,10 @@ class PILDriver(object):
 
         Enhance contrast in the top image.
         """
-        from PIL import ImageEnhance
+        import ImageEnhance
         factor = float(self.do_pop())
         image = self.do_pop()
-        enhancer = ImageEnhance.Contrast(image)
+        enhancer = ImageEnhance.Color(image)
         self.push(enhancer.enhance(factor))
 
     def do_brightness(self):
@@ -458,10 +456,10 @@ class PILDriver(object):
 
         Enhance brightness in the top image.
         """
-        from PIL import ImageEnhance
+        import ImageEnhance
         factor = float(self.do_pop())
         image = self.do_pop()
-        enhancer = ImageEnhance.Brightness(image)
+        enhancer = ImageEnhance.Color(image)
         self.push(enhancer.enhance(factor))
 
     def do_sharpness(self):
@@ -469,10 +467,10 @@ class PILDriver(object):
 
         Enhance sharpness in the top image.
         """
-        from PIL import ImageEnhance
+        import ImageEnhance
         factor = float(self.do_pop())
         image = self.do_pop()
-        enhancer = ImageEnhance.Sharpness(image)
+        enhancer = ImageEnhance.Color(image)
         self.push(enhancer.enhance(factor))
 
     # The interpreter loop
@@ -484,10 +482,10 @@ class PILDriver(object):
             self.push(list[0])
             list = list[1:]
             if self.verbose:
-                print("Stack: " + repr(self.stack))
+                print "Stack: " + `self.stack`
             top = self.top()
-            if not isinstance(top, str):
-                continue
+            if type(top) != type(""):
+                continue;
             funcname = "do_" + top
             if not hasattr(self, funcname):
                 continue
@@ -498,6 +496,10 @@ class PILDriver(object):
 
 if __name__ == '__main__':
     import sys
+    try:
+        import readline
+    except ImportError:
+        pass # not available on all platforms
 
     # If we see command-line arguments, interpret them as a stack state
     # and execute.  Otherwise go interactive.
@@ -506,18 +508,15 @@ if __name__ == '__main__':
     if len(sys.argv[1:]) > 0:
         driver.execute(sys.argv[1:])
     else:
-        print("PILDriver says hello.")
-        while True:
+        print "PILDriver says hello."
+        while 1:
             try:
-                if sys.version_info[0] >= 3:
-                    line = input('pildriver> ')
-                else:
-                    line = raw_input('pildriver> ')
+                line = raw_input('pildriver> ');
             except EOFError:
-                print("\nPILDriver says goodbye.")
+                print "\nPILDriver says goodbye."
                 break
-            driver.execute(line.split())
-            print(driver.stack)
+            driver.execute(string.split(line))
+            print driver.stack
 
 # The following sets edit modes for GNU EMACS
 # Local Variables:

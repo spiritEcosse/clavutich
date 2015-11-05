@@ -1,4 +1,4 @@
-#!/home/igor/web/www/clavutich/.env/bin/python2.7
+#!/home/igor/web/www/clavutich/.env/bin/python
 #
 # The Python Imaging Library.
 # $Id$
@@ -13,31 +13,27 @@
 # 0.5   98-12-30 fl     Fixed -f option (from Anthony Baxter)
 #
 
-from __future__ import print_function
-
-import getopt
-import string
-import sys
+import site
+import getopt, string, sys
 
 from PIL import Image
 
-
 def usage():
-    print("PIL Convert 0.5/1998-12-30 -- convert image files")
-    print("Usage: pilconvert [option] infile outfile")
-    print()
-    print("Options:")
-    print()
-    print("  -c <format>  convert to format (default is given by extension)")
-    print()
-    print("  -g           convert to greyscale")
-    print("  -p           convert to palette image (using standard palette)")
-    print("  -r           convert to rgb")
-    print()
-    print("  -o           optimize output (trade speed for size)")
-    print("  -q <value>   set compression quality (0-100, JPEG only)")
-    print()
-    print("  -f           list supported file formats")
+    print "PIL Convert 0.5/1998-12-30 -- convert image files"
+    print "Usage: pilconvert [option] infile outfile"
+    print
+    print "Options:"
+    print
+    print "  -c <format>  convert to format (default is given by extension)"
+    print
+    print "  -g           convert to greyscale"
+    print "  -p           convert to palette image (using standard palette)"
+    print "  -r           convert to rgb"
+    print
+    print "  -o           optimize output (trade speed for size)"
+    print "  -q <value>   set compression quality (0-100, JPEG only)"
+    print
+    print "  -f           list supported file formats"
     sys.exit(1)
 
 if len(sys.argv) == 1:
@@ -45,30 +41,31 @@ if len(sys.argv) == 1:
 
 try:
     opt, argv = getopt.getopt(sys.argv[1:], "c:dfgopq:r")
-except getopt.error as v:
-    print(v)
+except getopt.error, v:
+    print v
     sys.exit(1)
 
-output_format = None
+format = None
 convert = None
 
-options = {}
+options = { }
 
 for o, a in opt:
 
     if o == "-f":
         Image.init()
-        id = sorted(Image.ID)
-        print("Supported formats (* indicates output format):")
+        id = Image.ID[:]
+        id.sort()
+        print "Supported formats (* indicates output format):"
         for i in id:
-            if i in Image.SAVE:
-                print(i+"*", end=' ')
+            if Image.SAVE.has_key(i):
+                print i+"*",
             else:
-                print(i, end=' ')
+                print i,
         sys.exit(1)
 
     elif o == "-c":
-        output_format = a
+        format = a
 
     if o == "-g":
         convert = "L"
@@ -90,10 +87,10 @@ try:
     if convert and im.mode != convert:
         im.draft(convert, im.size)
         im = im.convert(convert)
-    if output_format:
-        im.save(argv[1], output_format, **options)
+    if format:
+        apply(im.save, (argv[1], format), options)
     else:
-        im.save(argv[1], **options)
+        apply(im.save, (argv[1],), options)
 except:
-    print("cannot convert image", end=' ')
-    print("(%s:%s)" % (sys.exc_info()[0], sys.exc_info()[1]))
+    print "cannot convert image",
+    print "(%s:%s)" % (sys.exc_type, sys.exc_value)

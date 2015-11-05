@@ -8,7 +8,7 @@
                 {% recursetree nodes %}
                     {% with title=node.title|lower|capfirst|truncatechars:60 url=node.get_absolute_url %}
                         {% if not node.is_leaf_node %}
-                            <a href="#cat_{{ node.pk }}" data-toggle="collapse" class="list-group-item list-group-item-info" data-parent="#cat_{{ node.parent.pk }}">
+                            <a href="#cat_{{ node.pk }}" data-toggle="collapse" class="list-group-item {% ifequal category.slug node.slug %}list-group-item-default{% endifequal %}" data-parent="#cat_{{ node.parent.pk }}">
                                 {{ title }} <i class="fa fa-caret-down"></i>
                             </a>
 
@@ -16,7 +16,7 @@
                                 {{ children }}
                             </div>
                         {% else %}
-                            <a href="{{ url }}" class="list-group-item list-group-item-default" data-parent="#cat_{{ node.parent.pk }}">
+                            <a href="{{ url }}" class="list-group-item {% ifequal category.slug node.slug %}list-group-item-default{% endifequal %}" data-parent="#cat_{{ node.parent.pk }}">
                                 {{ title }}
                             </a>
                         {% endif %}

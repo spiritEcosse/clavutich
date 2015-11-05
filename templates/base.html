@@ -127,7 +127,7 @@
                                 {% endthumbnail %}
                                 <div class="caption">
                                     <a href="{{ product.get_absolute_url }}">
-                                        <h3>{{ product.title|capfirst|truncatechars:30 }}</h3>
+                                        <h4>{{ product.title|capfirst|truncatechars:30 }}</h4>
                                     </a>
                                     <p>{{ product.description|striptags|safe|truncatechars:50 }}</p>
                                     <p>

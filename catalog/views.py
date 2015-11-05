@@ -20,7 +20,7 @@ def get_obj(self):
     slugs = concatenated_slugs.split(self.model._slug_separator)
 
     try:
-        obj = get_object_or_404(self.model, slug=slugs[-1])
+        obj = get_object_or_404(self.model, slug=slugs[-1], enable=True)
     except IndexError:
         raise Http404
 
@@ -52,7 +52,7 @@ class CategoryDetailView(SingleObjectMixin, generic.ListView):
         return super(CategoryDetailView, self).get(request, *args, **kwargs)
 
     def get_queryset(self):
-        return self.object.products.all()
+        return self.object.products.filter(enable=True).all()
 
     def get_context_data(self, **kwargs):
         context = super(CategoryDetailView, self).get_context_data(**kwargs)

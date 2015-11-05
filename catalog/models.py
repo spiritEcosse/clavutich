@@ -7,6 +7,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 from ckeditor_uploader.fields import RichTextUploadingField
 from util import models
 from clavutich import settings
+from django_select2.forms import Select2Widget
 
 
 class Category(MPTTModel):

@@ -18,7 +18,7 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-        products = Product.objects.order_by('-date_last_modified')[:40]
+        products = Product.objects.filter(enable=True).order_by('-date_last_modified')[:40]
         context['products'] = products
         return context
 

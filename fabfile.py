@@ -21,7 +21,7 @@ def deploy():
     :return:
     """
     local_act()
-    # update_requirements()
+    update_requirements()
     remote_act()
 
 
@@ -34,10 +34,11 @@ def remote_act():
         with settings(host_string=host):
             with cd(dir_name):
                 run("git reset --hard")
-                with prefix('source .env/bin/activate'):
+                # with prefix('source .env/bin/activate'):
                     # run("./manage.py migrate")
+                    # local("pip uninstall PIL")
+                    # local("pip install PIL --allow-external PIL --allow-unverified PIL")
                     # run("./manage.py loaddata db.json")
-                    run('pip install git+git://github.com/python-imaging/Pillow.git')
 
                 pids = run("ps -ef|grep -v grep |grep '%s' | awk '{print $2}'" % PROJECT_NAME)
 
@@ -55,12 +56,12 @@ def local_act():
     activate_env = os.path.expanduser(os.path.join(BASE_DIR, ".env/bin/activate_this.py"))
     execfile(activate_env, dict(__file__=activate_env))
 
-    # for host, dir_name in HOSTS:
-    #     with settings(host_string=host):
-    #         with cd(dir_name):
-    #             run('mkdir -p %s' % media)
-    #             put(os.path.join(BASE_DIR, media), dir_name)
-    #
+    for host, dir_name in HOSTS:
+        with settings(host_string=host):
+            with cd(dir_name):
+                run('mkdir -p %s' % media)
+                put(os.path.join(BASE_DIR, media), dir_name)
+
     local("./manage.py test cart")
     local("./manage.py test")
     local("grunt default")
@@ -92,9 +93,6 @@ def update_requirements():
     """
     for host, dir_name in HOSTS:
         with settings(host_string=host):
-            # run('apt-get install libjpeg-dev')
-            # run('pip install PIL --allow-external PIL --allow-unverified PIL')
-
             with cd(dir_name):
                 with prefix('source .env/bin/activate'):
                     run('pip install -r %s' % REQUIREMENTS_FILE)

@@ -21,7 +21,6 @@ feedparser==5.2.1
 FeinCMS==1.11.1
 futures==3.0.3
 paramiko==1.15.3
-PIL==1.1.7
 Pillow==3.0.0
 psycopg2==2.6.1
 pycrypto==2.6.1

@@ -129,7 +129,7 @@
                                     <a href="{{ product.get_absolute_url }}">
                                         <h3>{{ product.title|capfirst|truncatechars:30 }}</h3>
                                     </a>
-                                    <p>{{ product.description|striptags|truncatechars:50 }}</p>
+                                    <p>{{ product.description|striptags|safe|truncatechars:50 }}</p>
                                     <p>
                                         <a href="{{ product.get_absolute_url }}" class="btn btn-default">Детальнее</a>
                                     </p>

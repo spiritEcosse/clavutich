@@ -1,4 +1,4 @@
-#!/home/igor/web/www/clavutich/.env/bin/python2.7
+#!/home/igor/web/www/clavutich/.env/bin/python
 #
 # The Python Imaging Library
 # $Id$

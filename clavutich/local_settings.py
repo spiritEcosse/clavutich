@@ -8,7 +8,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEBUG = True
-THUMBNAIL_DEBUG = False
+THUMBNAIL_DEBUG = True
 
 DB_BACKEND = 'django.contrib.gis.db.backends.postgis'
 DB_NAME = 'clavutich'

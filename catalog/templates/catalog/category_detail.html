@@ -29,7 +29,27 @@
                 {% endthumbnail %}
             </div>
             <div class="col-sm-9">
-                <p>{{ object.description }}</p>
+                <p>{{ object.description|safe }}</p>
+            </div>
+        </div>
+
+        <div class="row text-center">
+            <div class="col-xs-12">
+                {% for category in object.get_children %}
+                    {% with title=category.title|capfirst %}
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="thumbnail">
+                                {% thumbnail category.image "320x150" crop="center" as im %}
+                                    <img src="{{ im.url }}" class="img-responsive img-rounded" title="{{ title }}" alt="{{ title }}">
+                                {% endthumbnail %}
+                                <div class="caption">
+                                    <h4>{{ title }}</h4>
+                                    <p><a href="{{ category.get_absolute_url }}" class="btn btn-default">Детальнее</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endwith %}
+                {% endfor %}
             </div>
         </div>
 
@@ -46,7 +66,7 @@
 
                             <div class="caption">
                                 <h4><a href="{{ product.get_absolute_url }}">{{ title|truncatechars:30 }}</a></h4>
-                                <p>{{ product.description|striptags|truncatechars:50 }}</p>
+                                <p>{{ product.description|striptags|safe|truncatechars:50 }}</p>
                                 <p><a href="{{ product.get_absolute_url }}" class="btn btn-default">Детальнее</a></p>
                             </div>
                         {% endwith %}

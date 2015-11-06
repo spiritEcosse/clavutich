@@ -32,7 +32,6 @@ regex==2015.10.29
 requests==2.8.1
 selenium==2.48.0
 six==1.10.0
-sorl-thumbnail==12.3
 sqlparse==0.1.16
 tornado==4.2.1
 Unidecode==0.4.18

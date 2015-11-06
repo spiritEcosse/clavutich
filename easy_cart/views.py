@@ -9,7 +9,6 @@ from django.views.generic import View
 from django.http import JsonResponse
 import json
 from catalog.models import Product
-from sorl.thumbnail import get_thumbnail
 from clavutich.settings import MEDIA_URL
 from forms import UserDataForm
 from djangular.forms import NgModelFormMixin
@@ -18,6 +17,7 @@ from django.http import HttpResponse
 from clavutich.settings import EMAIL_COMPANY
 from django.template.loader import get_template
 from django.core.mail import EmailMultiAlternatives
+from easy_thumbnails.files import get_thumbnailer
 
 
 class JSONResponseMixin(object):
@@ -54,8 +54,8 @@ def get_products(self):
         item['title'] = product.product.title.capitalize()
         item['pk'] = product.product.pk
         item['absolute_url'] = product.product.get_absolute_url()
-        image = get_thumbnail(product.product.image, '100x100', crop='center', quality=99)
-        item['image_thumb'] = MEDIA_URL + image.name
+        options = {'size': (100, 100), 'crop': True}
+        item['image_thumb'] = get_thumbnailer(product.product.image).get_thumbnail(options).url
         products.append(item)
     return {'products': products}
 

@@ -21,7 +21,7 @@ def deploy():
     :return:
     """
     local_act()
-    update_requirements()
+    # update_requirements()
     remote_act()
 
 
@@ -34,6 +34,7 @@ def remote_act():
         with settings(host_string=host):
             with cd(dir_name):
                 run("git reset --hard")
+
                 with prefix('source .env/bin/activate'):
                     run("./manage.py migrate")
                     # local("pip uninstall PIL")
@@ -63,13 +64,13 @@ def local_act():
     #             put(os.path.join(BASE_DIR, media), dir_name)
 
     # local("./manage.py test cart")
-    local("./manage.py test")
-    local("grunt default")
-    local("./manage.py makemigrations")
-    local("./manage.py migrate")
-    local("./manage.py dumpdata --exclude=contenttypes --indent 4 > db.json")
+    # local("./manage.py test")
+    # local("grunt default")
+    # local("./manage.py makemigrations")
+    # local("./manage.py migrate")
+    local("./manage.py dumpdata --indent 4 > db.json")
     local('pip freeze > ' + REQUIREMENTS_FILE)
-    local("./manage.py collectstatic --noinput -c")
+    # local("./manage.py collectstatic --noinput -c")
     local("git add .")
     status = local("git status -s", capture=True)
 

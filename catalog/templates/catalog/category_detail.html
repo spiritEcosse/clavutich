@@ -3,7 +3,16 @@
 {% load thumbnail %}
 {% load mptt_tags %}
 
-{% block title %}{{ object.title|lower|capfirst }}{% endblock %}
+{% block title %}
+    {% if object.meta_title %}
+        {{ object.meta_title|lower|capfirst|striptags|safe }}
+    {% else %}
+        {{ object.title|lower|capfirst|striptags|safe }}
+    {% endif %}
+{% endblock %}
+{% block meta_description %}{{ object.meta_description|striptags|safe }}{% endblock %}
+{% block meta_keywords %}{{ object.meta_keywords|striptags|safe }}{% endblock %}
+
 {% block breadcrumbs %}
     <ol class="breadcrumb">
         <li><a href="/">Главная</a></li>
@@ -20,13 +29,12 @@
     {% include "left_bar.html" %}
 
     <div class="col-md-9">
-        <h1>{{ object.title }}</h1>
+        <h1>{{ object.title|lower|capfirst }}</h1>
 
         <div class="row">
             <div class="col-sm-3">
-                {% thumbnail object.image "200x200" crop="center" as im %}
-                    <img src="{{ im.url }}" class="img-responsive img-rounded" alt="{{ title }}" title="{{ title }}">
-                {% endthumbnail %}
+                <img src="{% thumbnail object.image 200x200 crop %}" class="img-responsive img-rounded" alt="{{ title|lower|capfirst }}"
+                     title="{{ title|lower|capfirst }}">
             </div>
             <div class="col-sm-9">
                 <p>{{ object.description|safe }}</p>
@@ -36,16 +44,14 @@
         <div class="row text-center">
             <div class="col-xs-12">
                 {% for category in object.get_children %}
-                    {% with title=category.title|capfirst %}
+                    {% with title=category.title|lower|capfirst %}
                         <div class="col-xs-12 col-sm-4">
                             <div class="thumbnail">
-                                {% thumbnail category.image "320x150" crop="center" as im %}
-                                    <a href="{{ category.get_absolute_url }}">
-                                        <img src="{{ im.url }}" class="img-responsive img-rounded" title="{{ title }}" alt="{{ title }}">
-                                    </a>
-                                {% endthumbnail %}
+                                <a href="{{ category.get_absolute_url }}">
+                                    <img src="{% thumbnail category.image 320x150 crop %}" class="img-responsive img-rounded" title="{{ title }}" alt="{{ title }}">
+                                </a>
                                 <div class="caption">
-                                    <h4>{{ title }}</h4>
+                                    <h4><a href="{{ category.get_absolute_url }}">{{ title|truncatechars:'60' }}</a></h4>
                                     <p><a href="{{ category.get_absolute_url }}" class="btn btn-default">Детальнее</a></p>
                                 </div>
                             </div>
@@ -60,12 +66,9 @@
                 <div class="col-sm-4 col-lg-4 col-md-4">
                     <div class="thumbnail">
                         {% with product.title|lower|capfirst as title %}
-                            {% thumbnail product.image "320x150" crop="center" as im %}
-                                <a href="{{ product.get_absolute_url }}">
-                                    <img src="{{ im.url }}" class="img-responsive img-rounded" title="{{ title }}" alt="{{ title }}">
-                                </a>
-                            {% endthumbnail %}
-
+                            <a href="{{ product.get_absolute_url }}">
+                                <img src="{% thumbnail product.image 320x150 crop %}" class="img-responsive img-rounded" title="{{ title }}" alt="{{ title }}">
+                            </a>
                             <div class="caption">
                                 <h4><a href="{{ product.get_absolute_url }}">{{ title|truncatechars:30 }}</a></h4>
                                 <p>{{ product.description|striptags|safe|truncatechars:50 }}</p>

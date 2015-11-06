@@ -35,9 +35,9 @@ def remote_act():
             with cd(dir_name):
                 run("git reset --hard")
                 with prefix('source .env/bin/activate'):
-                    # run("./manage.py migrate")
-                    local("pip uninstall PIL")
-                    local("pip install PIL --allow-external PIL --allow-unverified PIL")
+                    run("./manage.py migrate")
+                    # local("pip uninstall PIL")
+                    # local("pip install PIL --allow-external PIL --allow-unverified PIL")
                     run("./manage.py loaddata db.json")
 
                 pids = run("ps -ef|grep -v grep |grep '%s' | awk '{print $2}'" % PROJECT_NAME)
@@ -56,13 +56,13 @@ def local_act():
     activate_env = os.path.expanduser(os.path.join(BASE_DIR, ".env/bin/activate_this.py"))
     execfile(activate_env, dict(__file__=activate_env))
 
-    for host, dir_name in HOSTS:
-        with settings(host_string=host):
-            with cd(dir_name):
-                run('mkdir -p %simages/' % media)
-                put(os.path.join(BASE_DIR, media + 'images/'), dir_name)
+    # for host, dir_name in HOSTS:
+    #     with settings(host_string=host):
+    #         with cd(dir_name):
+    #             run('mkdir -p %s' % media)
+    #             put(os.path.join(BASE_DIR, media), dir_name)
 
-    local("./manage.py test cart")
+    # local("./manage.py test cart")
     local("./manage.py test")
     local("grunt default")
     local("./manage.py makemigrations")

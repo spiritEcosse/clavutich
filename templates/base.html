@@ -12,6 +12,8 @@
     <meta name="author" content="">
 
     <title>{% block title %}Clavutich{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}{% endblock %}">
+    <meta name="meta_keywords" content="{% block meta_keywords %}{% endblock %}">
 
     {% if debug == True %}
         <link rel="stylesheet" type="text/css" href="{% static 'bower_components/font-awesome/css/font-awesome.css' %}">
@@ -120,20 +122,20 @@
                     {% for product in products %}
                         <div class="col-md-3 col-sm-6 hero-feature">
                             <div class="thumbnail">
-                                {% thumbnail product.image "800x400" crop="center" as im %}
+                                {% with title=product.title|lower|capfirst %}
                                     <a href="{{ product.get_absolute_url }}">
-                                        <img src="{{ im.url }}" class="img-responsive img-rounded" title="{{ title }}" alt="{{ title }}">
+                                        <img src="{% thumbnail product.image 300x150 crop %}" class="img-responsive img-rounded" title="{{ title }}" alt="{{ title }}">
                                     </a>
-                                {% endthumbnail %}
-                                <div class="caption">
-                                    <a href="{{ product.get_absolute_url }}">
-                                        <h4>{{ product.title|capfirst|truncatechars:30 }}</h4>
-                                    </a>
-                                    <p>{{ product.description|striptags|safe|truncatechars:50 }}</p>
-                                    <p>
-                                        <a href="{{ product.get_absolute_url }}" class="btn btn-default">Детальнее</a>
-                                    </p>
-                                </div>
+                                    <div class="caption">
+                                        <a href="{{ product.get_absolute_url }}">
+                                            <h4>{{ title|truncatechars:30 }}</h4>
+                                        </a>
+                                        <p>{{ product.description|striptags|safe|truncatechars:50 }}</p>
+                                        <p>
+                                            <a href="{{ product.get_absolute_url }}" class="btn btn-default">Детальнее</a>
+                                        </p>
+                                    </div>
+                                {% endwith %}
                             </div>
                         </div>
                     {% endfor %}

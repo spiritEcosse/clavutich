@@ -1,7 +1,15 @@
 {% extends "base.html" %}
 {% load thumbnail %}
 
-{% block title %}{{ object.title|lower|capfirst }}{% endblock %}
+{% block title %}
+    {% if object.meta_title %}
+        {{ object.meta_title|lower|capfirst|striptags|safe }}
+    {% else %}
+        {{ object.title|lower|capfirst|striptags|safe }}
+    {% endif %}
+{% endblock %}
+{% block meta_description %}{{ object.meta_description|striptags|safe }}{% endblock %}
+{% block meta_keywords %}{{ object.meta_keywords|striptags|safe }}{% endblock %}
 {% block ngApp %}ng-app="catalog"{% endblock %}
 
 {% block breadcrumbs %}
@@ -34,12 +42,10 @@
                 <div class="col-sm-3">
                     <div class="row text-center">
                         <div class="col-xs-12">
-                            {% thumbnail object.image "200x200" crop="center" as im %}
-                                <a id="main" href="{{ object.image.url }}" class="pull-left highslide"
-                                   onclick="return hs.expand(this, { slideshowGroup: 1, thumbnailId: 'main' } )">
-                                    <img src="{{ im.url }}" class="img-responsive img-rounded" alt="{{ title }}" title="{{ title }}">
-                                </a>
-                            {% endthumbnail %}
+                            <a id="main" href="{{ object.image.url }}" class="pull-left highslide"
+                               onclick="return hs.expand(this, { slideshowGroup: 1, thumbnailId: 'main' } )">
+                                <img src="{% thumbnail product.image 200x200 crop %}" class="img-responsive img-rounded" alt="{{ title }}" title="{{ title }}">
+                            </a>
                         </div>
                         <div class="col-xs-12 cart" >
                             <form method="post" novalidate="novalidate" ng-init="action='{% url "catalog:add_to_cart" object.pk %}'" >

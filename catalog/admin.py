@@ -7,6 +7,7 @@ from catalog.widgets import ImageWidget
 from django.db import models
 from feincms.admin import tree_editor
 from django.db.models import When, Case
+from django.forms import Textarea
 
 
 def change_status(modeladmin, request, queryset):
@@ -25,10 +26,12 @@ class CategoryAdmin(tree_editor.TreeEditor):
     formfield_overrides = {
         models.ManyToManyField: {'widget': widgets.FilteredSelectMultiple('', False, attrs={'size': '10'})},
         models.ImageField: {'widget': ImageWidget(attrs={'max_width': '100px', 'max_height': '100px'})},
+        models.TextField: {'widget': Textarea(attrs={'cols': 40, 'rows': 4})},
     }
     list_filter = ('title', 'date_create', 'date_last_modified', 'enable')
     mptt_level_indent = 20
     actions = [change_status]
+    search_fields = ('title', 'slug', )
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -37,9 +40,11 @@ class ProductAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.ManyToManyField: {'widget': widgets.FilteredSelectMultiple('', False, attrs={'size': '10'})},
         models.ImageField: {'widget': ImageWidget(attrs={'max_width': '100px', 'max_height': '100px'})},
+        models.TextField: {'widget': Textarea(attrs={'rows': 4, 'cols': 40})},
     }
     list_filter = ('title', 'date_create', 'category', 'date_last_modified', 'enable')
     actions = [change_status]
+    search_fields = ('title', 'slug', )
 
 
 admin.site.register(Category, CategoryAdmin)

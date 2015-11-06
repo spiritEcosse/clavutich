@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from django.db import models
-from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from mptt.models import MPTTModel, TreeForeignKey
 from ckeditor_uploader.fields import RichTextUploadingField
@@ -22,6 +20,9 @@ class Category(MPTTModel):
     date_create = models.DateTimeField(auto_now_add=True)
     date_last_modified = models.DateTimeField(auto_now=True)
     sort = models.IntegerField(verbose_name=u'Сортировка', blank=True, default=0)
+    meta_keywords = models.TextField(verbose_name=u'Мета тег: keywords', blank=True)
+    meta_description = models.TextField(verbose_name=u'Мета тег: description', blank=True)
+    meta_title = models.CharField(verbose_name=u'Мета тег: title', blank=True, max_length=500)
 
     _slug_separator = '/'
 
@@ -69,6 +70,9 @@ class Product(models.Model):
     date_create = models.DateTimeField(auto_now_add=True)
     date_last_modified = models.DateTimeField(auto_now=True)
     sort = models.IntegerField(verbose_name=u'Сортировка', blank=True, default=0)
+    meta_keywords = models.TextField(verbose_name=u'Мета тег: keywords', blank=True)
+    meta_description = models.TextField(verbose_name=u'Мета тег: description', blank=True)
+    meta_title = models.CharField(verbose_name=u'Мета тег: title', blank=True, max_length=500)
 
     _slug_separator = '/'
 
@@ -88,5 +92,3 @@ class Product(models.Model):
             return u'<img style="max-width:100px; max-height:100px" src="%s" />' % self.image.url
     image_preview.short_description = u'Изображение'
     image_preview.allow_tags = True
-
-

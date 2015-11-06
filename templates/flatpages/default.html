@@ -1,7 +1,15 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{{ flatpage.title }}{% endblock %}
+{% block title %}
+    {% if flatpage.meta_title %}
+        {{ flatpage.meta_title|lower|capfirst|striptags|safe }}
+    {% else %}
+        {{ flatpage.title|lower|capfirst|striptags|safe }}
+    {% endif %}
+{% endblock %}
+{% block meta_description %}{{ flatpage.meta_description|striptags|safe }}{% endblock %}
+{% block meta_keywords %}{{ flatpage.meta_keywords|striptags|safe }}{% endblock %}
 
 {% block main %}
     <div class="container">

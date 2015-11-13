@@ -21,7 +21,7 @@ def deploy():
     :return:
     """
     local_act()
-    # update_requirements()
+    update_requirements()
     remote_act()
 
 
@@ -37,7 +37,7 @@ def remote_act():
 
                 with prefix('source .env/bin/activate'):
                     run("./manage.py migrate")
-                    run("./manage.py loaddata db.json")
+                    # run("./manage.py loaddata db.json")
 
                 pids = run("ps -ef|grep -v grep |grep '%s' | awk '{print $2}'" % PROJECT_NAME)
 
@@ -61,12 +61,11 @@ def local_act():
     #             run('mkdir -p %s' % media)
     #             put(os.path.join(BASE_DIR, media), dir_name)
 
-    local("./manage.py test cart")
     local("./manage.py test")
     local("grunt default")
     local("./manage.py makemigrations")
     local("./manage.py migrate")
-    local("./manage.py dumpdata --indent 4 --natural -e contenttypes -e auth.Permission -e sessions -e admin > db.json")
+    # local("./manage.py dumpdata --indent 4 --natural -e contenttypes -e auth.Permission -e sessions -e admin > db.json")
     local('pip freeze > ' + REQUIREMENTS_FILE)
     local("./manage.py collectstatic --noinput -c")
     local("git add .")

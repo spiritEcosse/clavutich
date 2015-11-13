@@ -28,7 +28,7 @@ class Cart:
             yield item
 
     def get_product(self, product_pk):
-        return self.cart.item_set.get(pk=product_pk)
+        return self.cart.item_set.get(object_id=product_pk)
 
     def new(self, request):
         cart = models.Cart(creation_date=datetime.datetime.now())

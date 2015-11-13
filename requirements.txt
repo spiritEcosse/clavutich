@@ -8,7 +8,6 @@ Django==1.8.5
 django-angular==0.7.15
 django-appconf==1.0.1
 django-bootstrap-pagination==1.5.1
-django-cart==1.0.3
 django-ckeditor==5.0.2
 django-debug-toolbar==1.4
 django-grunted-assets==0.2.1

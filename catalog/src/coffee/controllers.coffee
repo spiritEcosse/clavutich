@@ -20,7 +20,7 @@ app.controller 'Product', ['$http', '$scope', '$window', '$document', ($http, $s
     if $scope.quantity < 1
       return false
 
-    $http.post($scope.action, {quantity: $scope.quantity}).success (data) ->
+    $http.post('/catalog/product_add_to_cart/' + $scope.product.pk + '/', {quantity: $scope.quantity}).success (data) ->
       $scope.alerts.unshift({msg: data.msg, type: 'success'})
       $document.scrollToElement(alerts, offset, duration)
       $scope.disabled = false

@@ -16,11 +16,10 @@
     <ol class="breadcrumb">
         <li><a href="/">Главная</a></li>
 
-        {% for category in object.category.get_ancestors %}
+        {% for category in object.category.get_ancestors_and_self %}
             <li><a href="{{ category.get_absolute_url }}">{{ category.title|lower|capfirst|truncatechars:80 }}</a></li>
         {% endfor %}
 
-        <li><a href="{{ object.category.get_absolute_url }}">{{ object.category.title|lower|capfirst|truncatechars:80 }}</a></li>
         <li class="active">{{ object.title|lower|capfirst|truncatechars:80 }}</li>
     </ol>
 {% endblock %}
@@ -48,7 +47,7 @@
                             </a>
                         </div>
                         <div class="col-xs-12 cart" >
-                            <form method="post" novalidate="novalidate" ng-init="action='{% url "catalog:add_to_cart" object.pk %}'" >
+                            <form method="post" novalidate="novalidate" ng-init="product.pk='{{ object.pk }}'">
                                 <input type="number" ng-model="quantity" class="form-control" aria-label="Количество">
                                 <button class="btn btn-primary" id="comment_form" type="button" ng-disabled="disabled" ng-click="add_to_cart()">
                                     В корзину

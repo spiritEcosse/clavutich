@@ -10,7 +10,8 @@ EMAIL_USE_TLS = True
 DEBUG = True
 THUMBNAIL_DEBUG = True
 
-DB_BACKEND = 'django.contrib.gis.db.backends.postgis'
+# DB_BACKEND = 'django.contrib.gis.db.backends.postgis'
+DB_BACKEND = 'django.db.backends.postgresql_psycopg2'
 DB_NAME = 'clavutich'
 DB_USER = 'clavutich'
 DB_PASSWORD = 1

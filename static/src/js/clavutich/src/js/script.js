@@ -110,7 +110,7 @@
         if ($scope.quantity < 1) {
           return false;
         }
-        $http.post($scope.action, {
+        $http.post('/catalog/product_add_to_cart/' + $scope.product.pk + '/', {
           quantity: $scope.quantity
         }).success(function(data) {
           $scope.alerts.unshift({

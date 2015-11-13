@@ -1,18 +1,17 @@
 # --coding: utf-8--
 
+import json
+
 from django.views.generic.base import TemplateView
-from cart import Cart
+from cart.cart import Cart
 from django.views.generic import FormView
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import View
 from django.http import JsonResponse
-import json
 from catalog.models import Product
-from clavutich.settings import MEDIA_URL
 from forms import UserDataForm
 from djangular.forms import NgModelFormMixin
-from django.core.mail import send_mail
 from django.http import HttpResponse
 from clavutich.settings import EMAIL_COMPANY
 from django.template.loader import get_template
@@ -37,7 +36,6 @@ class JSONResponseMixin(object):
         """
         Returns an object that will be serialized as JSON by json.dumps().
         """
-        from django.core import serializers
         # Note: This is *EXTREMELY* naive; in reality, you'll need
         # to do much more complex handling to ensure that arbitrary
         # objects -- such as Django model instances or querysets

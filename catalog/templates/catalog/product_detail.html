@@ -25,6 +25,7 @@
 {% endblock %}
 
 {% block main %}
+    {%csrf_token %}
     {% include "left_bar.html" %}
 
     <div class="col-md-9" ng-controller="Product" ng-cloak>

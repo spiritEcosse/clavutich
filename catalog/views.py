@@ -63,7 +63,7 @@ class CategoryDetailView(SingleObjectMixin, generic.ListView):
             return potential_redirect
 
         self.kwargs['slug'] = self.object.slug
-        self.object = self.get_object(queryset=Category.objects.all())
+        self.object = self.get_object(queryset=Category.objects.filter(enable=True).all())
         return super(CategoryDetailView, self).get(request, *args, **kwargs)
 
     def get_queryset(self):
@@ -72,6 +72,7 @@ class CategoryDetailView(SingleObjectMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(CategoryDetailView, self).get_context_data(**kwargs)
         context['category'] = self.object
+        context['categories'] = self.object.get_children().filter(enable=True)
         return context
 
 
@@ -106,7 +107,6 @@ class ProductDetailView(JSONResponseMixin, generic.DetailView):
     def get_context_data_ajax(self, **kwargs):
         return serializers.serialize('json', self.object)
 
-    @csrf_exempt
     def post(self, request, *args, **kwargs):
         if request.is_ajax():
             return self.render_to_json_response(self.get_context_data_ajax(**kwargs), **kwargs)
@@ -162,7 +162,6 @@ class JSONResponseMixin(object):
 class ProductAddToCart(SingleObjectMixin, JSONResponseMixin, View):
     model = Product
 
-    @csrf_exempt
     def post(self, request, *args, **kwargs):
         del kwargs['pk']
         self.object = self.get_object()

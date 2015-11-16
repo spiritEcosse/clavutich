@@ -13,6 +13,7 @@
 {% endblock %}
 
 {% block main %}
+    {%csrf_token %}
     <div ng-cloak ng-controller="Products" >
         {% include "easy_cart/products.html" %}
 

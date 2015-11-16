@@ -43,7 +43,7 @@
 
         <div class="row text-center">
             <div class="col-xs-12">
-                {% for category in object.get_children %}
+                {% for category in categories %}
                     {% with title=category.title|lower|capfirst %}
                         <div class="col-xs-12 col-sm-4">
                             <div class="thumbnail">

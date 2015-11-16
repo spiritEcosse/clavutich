@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-from clavutich import local_settings
+from clavutich import settings_local
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_NAME = os.path.basename(BASE_DIR)
@@ -24,8 +24,8 @@ PROJECT_NAME = os.path.basename(BASE_DIR)
 SECRET_KEY = '5llx!o977!7709jq8o*by2d&ib_d9uggf%0y9!ga7shoe-eypv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = local_settings.DEBUG
-THUMBNAIL_DEBUG = local_settings.THUMBNAIL_DEBUG
+DEBUG = settings_local.DEBUG
+THUMBNAIL_DEBUG = settings_local.THUMBNAIL_DEBUG
 ALLOWED_HOSTS = ['*']
 
 
@@ -96,13 +96,13 @@ WSGI_APPLICATION = 'clavutich.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': local_settings.DB_BACKEND,
+        'ENGINE': settings_local.DB_BACKEND,
         # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': local_settings.DB_NAME,
-        'USER': local_settings.DB_USER,
-        'PASSWORD': local_settings.DB_PASSWORD,
-        'HOST': local_settings.DB_HOST,
-        'POST': local_settings.DB_PORT,
+        'NAME': settings_local.DB_NAME,
+        'USER': settings_local.DB_USER,
+        'PASSWORD': settings_local.DB_PASSWORD,
+        'HOST': settings_local.DB_HOST,
+        'POST': settings_local.DB_PORT,
         }
 }
 
@@ -148,10 +148,10 @@ CKEDITOR_CONFIGS = {
 
 IMAGE_NOT_FOUND = 'images/image_not_found.jpg'
 ADMINS = (('igor', 'shevchenkcoigor@gmail.com'),)
-DEFAULT_FROM_EMAIL = local_settings.DEFAULT_FROM_EMAIL
-EMAIL_COMPANY = local_settings.EMAIL_COMPANY
-EMAIL_HOST_USER = local_settings.EMAIL_HOST_USER
-EMAIL_HOST_PASSWORD = local_settings.EMAIL_HOST_PASSWORD
-EMAIL_HOST = local_settings.EMAIL_HOST
-EMAIL_PORT = local_settings.EMAIL_PORT
-EMAIL_USE_TLS = local_settings.EMAIL_USE_TLS
+DEFAULT_FROM_EMAIL = settings_local.DEFAULT_FROM_EMAIL
+EMAIL_COMPANY = settings_local.EMAIL_COMPANY
+EMAIL_HOST_USER = settings_local.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = settings_local.EMAIL_HOST_PASSWORD
+EMAIL_HOST = settings_local.EMAIL_HOST
+EMAIL_PORT = settings_local.EMAIL_PORT
+EMAIL_USE_TLS = settings_local.EMAIL_USE_TLS

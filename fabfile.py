@@ -5,7 +5,7 @@ from fabric.api import local, prefix, run, cd, settings, put
 import os
 from clavutich.settings import BASE_DIR, PROJECT_NAME
 from fabric.state import env
-from clavutich.local_settings import HOSTS
+from clavutich.settings_local import HOSTS
 env.user = 'root'
 env.skip_bad_hosts = True
 env.warn_only = False
@@ -37,7 +37,7 @@ def remote_act():
 
                 with prefix('source .env/bin/activate'):
                     run("./manage.py migrate")
-                    run("./manage.py loaddata db.json")
+                    # run("./manage.py loaddata db.json")
 
                 pids = run("ps -ef|grep -v grep |grep '%s' | awk '{print $2}'" % PROJECT_NAME)
 

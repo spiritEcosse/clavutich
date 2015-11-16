@@ -61,7 +61,6 @@ def get_products(self):
 class ShowView(TemplateView, JSONResponseMixin):
     template_name = 'easy_cart/show.html'
 
-    @csrf_exempt
     def get_context_data_ajax(self, **kwargs):
         return get_products(self)
 

@@ -37,7 +37,7 @@ def remote_act():
 
                 with prefix('source .env/bin/activate'):
                     run("./manage.py migrate")
-                    run("./manage.py loaddata db.json")
+                    run("./manage.py loaddata --natural db.json")
 
                 pids = run("ps -ef|grep -v grep |grep '%s' | awk '{print $2}'" % PROJECT_NAME)
 

@@ -22,7 +22,7 @@ def deploy():
     """
     local_act()
     update_requirements()
-    remote_ac   t()
+    remote_act()
 
 
 def remote_act():
@@ -65,7 +65,7 @@ def local_act():
     local("grunt default")
     local("./manage.py makemigrations")
     local("./manage.py migrate")
-    local("./manage.py dumpdata --indent 4 --natural-primary --natural-foreign -e contenttypes -e auth.Permission -e sessions -e admin > db.json")
+    local("./manage.py dumpdata --indent 4 --natural-primary -e contenttypes -e auth.Permission -e sessions -e admin > db.json")
     local('pip freeze > ' + REQUIREMENTS_FILE)
     local("./manage.py collectstatic --noinput -c")
     local("git add .")

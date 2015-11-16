@@ -64,6 +64,7 @@ class ShowView(TemplateView, JSONResponseMixin):
     def get_context_data_ajax(self, **kwargs):
         return get_products(self)
 
+    @csrf_exempt
     def post(self, request, *args, **kwargs):
         return self.render_to_json_response(self.get_context_data_ajax(**kwargs), **kwargs)
 

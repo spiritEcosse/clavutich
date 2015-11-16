@@ -27,7 +27,7 @@ SECRET_KEY = '5llx!o977!7709jq8o*by2d&ib_d9uggf%0y9!ga7shoe-eypv'
 DEBUG = local_settings.DEBUG
 THUMBNAIL_DEBUG = local_settings.THUMBNAIL_DEBUG
 ALLOWED_HOSTS = ['*']
-#CSRF_COOKIE_DOMAIN = '.fvds.ru'
+CSRF_COOKIE_DOMAIN = 'clavutich.com.ua'
 
 
 # Application definition

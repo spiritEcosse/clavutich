@@ -119,6 +119,7 @@ class OrderView(JSONResponseMixin, FormView):
 class UpdateQuantityProductView(SingleObjectMixin, JSONResponseMixin, View):
     model = Product
 
+    @csrf_exempt
     def post(self, request, *args, **kwargs):
         del kwargs['pk']
         self.object = self.get_object()
@@ -134,6 +135,7 @@ class UpdateQuantityProductView(SingleObjectMixin, JSONResponseMixin, View):
 class RemoveProduct(SingleObjectMixin, JSONResponseMixin, View):
     model = Product
 
+    @csrf_exempt
     def post(self, request, *args, **kwargs):
         del kwargs['pk']
         self.object = self.get_object()

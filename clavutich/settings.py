@@ -27,7 +27,6 @@ SECRET_KEY = '5llx!o977!7709jq8o*by2d&ib_d9uggf%0y9!ga7shoe-eypv'
 DEBUG = local_settings.DEBUG
 THUMBNAIL_DEBUG = local_settings.THUMBNAIL_DEBUG
 ALLOWED_HOSTS = ['*']
-CSRF_COOKIE_DOMAIN = ['clavutich.com.ua']
 
 
 # Application definition
@@ -71,7 +70,6 @@ MIDDLEWARE_CLASSES = (
 SHOW_TOOLBAR_CALLBACK = DEBUG
 SITE_ID = 1
 ROOT_URLCONF = 'clavutich.urls'
-CSRF_COOKIE_SECURE = True
 
 TEMPLATES = [
     {
@@ -83,7 +81,6 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
-                'django.core.context_processors.csrf',
                 'django.contrib.messages.context_processors.messages',
                 'clavutich.template.context_processors.context_data',
                 'django.core.context_processors.request',

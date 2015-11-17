@@ -56,11 +56,11 @@ def local_act():
     activate_env = os.path.expanduser(os.path.join(BASE_DIR, ".env/bin/activate_this.py"))
     execfile(activate_env, dict(__file__=activate_env))
 
-    # for host, dir_name in HOSTS:
-    #     with settings(host_string=host):
-    #         with cd(dir_name):
-    #             run('mkdir -p %s' % media)
-    #             put(os.path.join(BASE_DIR, media), dir_name)
+    for host, dir_name in HOSTS:
+        with settings(host_string=host):
+            with cd(dir_name):
+                run('mkdir -p %s' % media)
+                put(os.path.join(BASE_DIR, media), dir_name)
 
     local("./manage.py test")
     local("grunt default")

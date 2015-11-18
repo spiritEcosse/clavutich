@@ -6,6 +6,7 @@
 import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "clavutich.settings")
+from clavutich.settings_local import AUTORELOAD
 
 # Activate your virtual env
 activate_env = os.path.expanduser(os.path.join(BASE_DIR, ".env/bin/activate_this.py"))
@@ -28,7 +29,7 @@ def main():
     wsgi_app = tornado.wsgi.WSGIContainer(
         django.core.handlers.wsgi.WSGIHandler())
     tornado_app = tornado.web.Application(
-        [('.*', tornado.web.FallbackHandler, dict(fallback=wsgi_app)), ], debug=True, autoreload=True)
+        [('.*', tornado.web.FallbackHandler, dict(fallback=wsgi_app)), ], debug=True, autoreload=AUTORELOAD)
     server = tornado.httpserver.HTTPServer(tornado_app)
     server.listen(options.port)
     tornado.ioloop.IOLoop.instance().start()

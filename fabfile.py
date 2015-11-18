@@ -35,10 +35,10 @@ def remote_act():
             with cd(dir_name):
                 run("git reset --hard")
 
-                with prefix('source .env/bin/activate'):
-                    run("./manage.py migrate")
-                    run("./manage.py flush --noinput")
-                    run("./manage.py loaddata db.json")
+                # with prefix('source .env/bin/activate'):
+                    # run("./manage.py migrate")
+                    # run("./manage.py flush --noinput")
+                    # run("./manage.py loaddata db.json")
 
                 pids = run("ps -ef|grep -v grep |grep '%s' | awk '{print $2}'" % PROJECT_NAME)
 
@@ -56,17 +56,17 @@ def local_act():
     activate_env = os.path.expanduser(os.path.join(BASE_DIR, ".env/bin/activate_this.py"))
     execfile(activate_env, dict(__file__=activate_env))
 
-    for host, dir_name in HOSTS:
-        with settings(host_string=host):
-            with cd(dir_name):
-                run('mkdir -p %s' % media)
-                put(os.path.join(BASE_DIR, media), dir_name)
+    # for host, dir_name in HOSTS:
+    #     with settings(host_string=host):
+    #         with cd(dir_name):
+    #             run('mkdir -p %s' % media)
+    #             put(os.path.join(BASE_DIR, media), dir_name)
 
     local("./manage.py test")
     local("grunt default")
     local("./manage.py makemigrations")
     local("./manage.py migrate")
-    local("./manage.py dumpdata --indent 4 --natural-primary --natural-foreign -e contenttypes -e auth.Permission -e sessions -e admin > db.json")
+    # local("./manage.py dumpdata --indent 4 --natural-primary --natural-foreign -e contenttypes -e auth.Permission -e sessions -e admin > db.json")
     local('pip freeze > ' + REQUIREMENTS_FILE)
     local("./manage.py collectstatic --noinput -c")
     local("git add .")

@@ -219,10 +219,6 @@
     </div>
 {% endblock %}
 
-{% if not debug %}
-    <link rel="stylesheet" type="text/css" href="{% static "build/css/style.min.css" %}">
-{% endif %}
-
 {% if debug %}
     <script src="{% static 'bower_components/jquery/dist/jquery.js' %}"></script>
     <script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.js' %}"></script>

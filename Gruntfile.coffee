@@ -33,13 +33,8 @@ module.exports = (grunt) ->
           'static/bower_components/font-awesome/css/font-awesome.css',
         ],
         dest: 'static/build/css/style.min.css'
-      minimal_css:
-        src: [
-          'static/src/css_minimal/minimal.css',
-        ],
-        dest: 'static/build/css/minimal.min.css'
   )
 
   grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-yui-compressor')
-  grunt.registerTask('default', ['coffee:files', 'min:dist', 'cssmin:dist', 'cssmin:minimal_css'])
+  grunt.registerTask('default', ['coffee:files', 'min:dist', 'cssmin:dist'])

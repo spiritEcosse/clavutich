@@ -50,10 +50,7 @@
                 display: block;
             }
             .navbar {
-                position: relative;
-                min-height: 50px;
-                margin-bottom: 20px;
-                border: 1px solid transparent;
+                display: none;
             }
             .row {
                 margin-right: -15px;
@@ -235,8 +232,12 @@
     <script src="{% static "src/js/custom.js" %}" type="text/javascript"></script>
     <script src="{% static "src/js/clavutich/src/js/script.js" %}" type="text/javascript"></script>
 {% else %}
-    <link rel="stylesheet" type="text/css" href="{% static "build/css/style.min.css" %}">
     <script src="{% static "build/js/script.min.js" %}"></script>
+    <script>
+        $(document).ready(function() {
+            $("head").append("<link rel=\"stylesheet\" type=\"text/css\" href=\"/static_root/build/css/style.min.css\" >");
+        });
+    </script>
 {% endif %}
 
 </body>

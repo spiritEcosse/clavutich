@@ -7,7 +7,9 @@
     "grunt": "^0.4.5",
     "grunt-yui-compressor": "^0.4.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "grunt-contrib-watch": "^0.6.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

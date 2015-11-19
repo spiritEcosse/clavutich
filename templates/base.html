@@ -11,6 +11,16 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    {% if debug %}
+        <link rel="stylesheet" type="text/css" href="{% static 'bower_components/font-awesome/css/font-awesome.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static "djangular/css/styles.css" %}" />
+        <link rel="stylesheet" type="text/css" href="{% static "src/css/bootstrap.css" %}">
+        <link rel="stylesheet" type="text/css" href="{% static "src/highslide/highslide.css" %}" />
+        <link rel="stylesheet" type="text/css" href="{% static "src/css/shop-homepage.css" %}">
+    {% else %}
+        <link rel="stylesheet" type="text/css" href="{% static "src/css/minimal.min.css" %}" />
+    {% endif %}
+
     <title>{% block title %}Clavutich{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}{% endblock %}">
     <meta name="meta_keywords" content="{% block meta_keywords %}{% endblock %}">
@@ -24,16 +34,6 @@
 
 </head>
 <body>
-{% if debug == True %}
-    <link rel="stylesheet" type="text/css" href="{% static 'bower_components/font-awesome/css/font-awesome.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static "djangular/css/styles.css" %}" />
-    <link rel="stylesheet" type="text/css" href="{% static "src/css/bootstrap.css" %}">
-    <link rel="stylesheet" type="text/css" href="{% static "src/highslide/highslide.css" %}" />
-    <link rel="stylesheet" type="text/css" href="{% static "src/css/shop-homepage.css" %}">
-{% else %}
-    <link rel="stylesheet" type="text/css" href="{% static "build/css/style.min.css" %}">
-{% endif %}
-
 {% block header %}
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -165,6 +165,10 @@
         </footer>
     </div>
 {% endblock %}
+
+{% if not debug %}
+    <link rel="stylesheet" type="text/css" href="{% static "build/css/style.min.css" %}">
+{% endif %}
 
 {% if debug %}
     <script src="{% static 'bower_components/jquery/dist/jquery.js' %}"></script>

@@ -20,6 +20,7 @@ import tornado.web
 import tornado.wsgi
 if django.VERSION[1] > 5:
     django.setup()
+import logging
 
 define('port', type=int, default=5555)
 
@@ -32,6 +33,10 @@ def main():
         [('.*', tornado.web.FallbackHandler, dict(fallback=wsgi_app)), ], debug=True, autoreload=AUTORELOAD)
     server = tornado.httpserver.HTTPServer(tornado_app)
     server.listen(options.port)
+    logger = logging.getLogger()
+    logger.setLevel(logging.DEBUG)
+    tornado.options.parse_command_line()
+    logging.info('Starting up')
     tornado.ioloop.IOLoop.instance().start()
 
 if __name__ == '__main__':

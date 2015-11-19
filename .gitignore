@@ -9,3 +9,5 @@ clavutich/local_settings.py
 !/media/images/catalog/product/empty
 parse_html.py
 clavutich/settings_local.py
+log
+*.log

@@ -42,9 +42,9 @@
                 <div class="col-sm-3">
                     <div class="row text-center">
                         <div class="col-xs-12">
-                            <a id="main" href="{{ object.image.url }}" class="pull-left highslide"
+                            <a id="main" href="{% thumbnail object.image 700x700 crop %}" class="pull-left highslide"
                                onclick="return hs.expand(this, { slideshowGroup: 1, thumbnailId: 'main' } )">
-                                <img src="{% thumbnail product.image 200x200 crop %}" class="img-responsive img-rounded" alt="{{ title }}" title="{{ title }}">
+                                <img src="{% thumbnail object.image 200x200 crop %}" class="img-responsive img-rounded" alt="{{ title }}" title="{{ title }}">
                             </a>
                         </div>
                         <div class="col-xs-12 cart" >

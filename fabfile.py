@@ -21,7 +21,6 @@ def deploy():
     :return:
     """
     local_act()
-    update_requirements()
     remote_act()
 
 
@@ -35,8 +34,9 @@ def remote_act():
             with cd(dir_name):
                 run("git reset --hard")
 
-                # with prefix('source .env/bin/activate'):
-                #     run("./manage.py migrate")
+                with prefix('source .env/bin/activate'):
+                    run("./manage.py migrate")
+                    run('pip install -r %s' % REQUIREMENTS_FILE)
                     # run("./manage.py flush --noinput")
                     # run("./manage.py loaddata db.json")
 
@@ -84,14 +84,3 @@ def local_act():
         local("git push bit")
         local("git push production")
 
-
-def update_requirements():
-    """
-    install external requirements on remote host
-    :return: None
-    """
-    for host, dir_name in HOSTS:
-        with settings(host_string=host):
-            with cd(dir_name):
-                with prefix('source .env/bin/activate'):
-                    run('pip install -r %s' % REQUIREMENTS_FILE)

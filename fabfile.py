@@ -36,7 +36,7 @@ def remote_act():
                 run("git reset --hard")
 
                 # with prefix('source .env/bin/activate'):
-                    # run("./manage.py migrate")
+                #     run("./manage.py migrate")
                     # run("./manage.py flush --noinput")
                     # run("./manage.py loaddata db.json")
 

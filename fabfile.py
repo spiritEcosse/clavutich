@@ -32,6 +32,7 @@ def remote_act():
     for host, dir_name in HOSTS:
         with settings(host_string=host):
             with cd(dir_name):
+                run("apt-get install libmemcached-dev")
                 run("git reset --hard")
 
                 with prefix('source .env/bin/activate'):

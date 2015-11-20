@@ -27,10 +27,10 @@ module.exports = (grunt) ->
     cssmin:
       dist:
         src: [
-          'static/src/css/**/*.css',
-          'static/src/highslide/highslide.css',
-          'static_root/djangular/css/styles.css',
           'static/bower_components/font-awesome/css/font-awesome.css',
+          'static_root/djangular/css/styles.css',
+          'static/src/highslide/highslide.css',
+          'static/src/css/**/*.css',
         ],
         dest: 'static/build/css/style.min.css'
   )

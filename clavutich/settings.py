@@ -147,6 +147,13 @@ CKEDITOR_CONFIGS = {
     },
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': 'unix:/tmp/memcached.sock',
+    }
+}
+
 IMAGE_NOT_FOUND = 'images/image_not_found.jpg'
 ADMINS = (('igor', 'shevchenkcoigor@gmail.com'),)
 DEFAULT_FROM_EMAIL = settings_local.DEFAULT_FROM_EMAIL

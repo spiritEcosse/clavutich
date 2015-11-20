@@ -152,9 +152,11 @@ a.list-group-item {
     color: #337ab7;
 }
 .logo {
-    background: url('../../build/images/clavutich_logo.png') no-repeat center center;
+    background: url('../../build/images/clavutich_logo.png') no-repeat center center ;
     width: 180px;
     min-height: 100%;
+    background-position-y: 14px;
+    background-position-x: 18px;
 }
 footer {
     margin: 20px 0;

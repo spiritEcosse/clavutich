@@ -60,7 +60,7 @@ def local_act():
     # local("find %s -type d -exec sh -c ' ls \"$0\"/*.jpeg 2>/dev/null && jpegoptim --strip-all -v -t \"$0\"/*.jpeg ' {} \;" % BASE_DIR)
     # local("find %s -type d -exec sh -c ' ls \"$0\"/*.jpg 2>/dev/null && jpegoptim --strip-all -v -t \"$0\"/*.jpg ' {} \;" % BASE_DIR)
     # local("find %s -type d -exec sh -c ' ls \"$0\"/*.png 2>/dev/null && optipng -o5 \"$0\"/*.png ' {} \;" % BASE_DIR)
-    local("find %s -type d -exec sh -c ' ls \"$0\"/*.png 2>/dev/null && optipng -o5 \"$0\"/*.png ' {} \;" % os.path.join(BASE_DIR, "static/src/images/"))
+    # local("find %s -type d -exec sh -c ' ls \"$0\"/*.png 2>/dev/null && optipng -o5 \"$0\"/*.png ' {} \;" % os.path.join(BASE_DIR, "static/src/images/"))
 
     # for host, dir_name in HOSTS:
     #     with settings(host_string=host):

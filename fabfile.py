@@ -5,7 +5,7 @@ from fabric.api import local, prefix, run, cd, settings, put
 import os
 from clavutich.settings import BASE_DIR, PROJECT_NAME
 from fabric.state import env
-from clavutich.settings_local import HOSTS
+from clavutich.settings_local import MY_SERVER, PRODUCTION_SERVER
 env.user = 'root'
 env.skip_bad_hosts = True
 env.warn_only = False
@@ -29,22 +29,34 @@ def remote_act():
     run remote acts
     :return: None
     """
-    for host, dir_name in HOSTS:
-        with settings(host_string=host):
-            with cd(dir_name):
-                run("git reset --hard")
+    with settings(host_string=MY_SERVER['server']):
+        with cd(MY_SERVER['path']):
+            run("apt-get install libmemcached-dev")
+            run("git reset --hard")
 
-                with prefix('source .env/bin/activate'):
-                    run('pip install -r %s' % REQUIREMENTS_FILE)
-                    run("./manage.py migrate")
-                    # run("./manage.py flush --noinput")
-                    # run("./manage.py loaddata db.json")
+            with prefix('source %s' % MY_SERVER['venv']):
+                run('pip install -r %s' % REQUIREMENTS_FILE)
+                run("./manage.py migrate")
+                # run("./manage.py flush --noinput")
+                # run("./manage.py loaddata db.json")
+                run("./manage.py clear_cache")
 
-                pids = run("ps -ef|grep -v grep |grep '%s' | awk '{print $2}'" % PROJECT_NAME)
+            pids = run("ps -ef|grep -v grep |grep '%s' | awk '{print $2}'" % PROJECT_NAME)
 
-                for pid in pids.split():
-                    run("kill -9 %s" % pid)
-                run("%s" % PROJECT_NAME)
+            for pid in pids.split():
+                run("kill -9 %s" % pid)
+            run("%s" % PROJECT_NAME)
+
+    with settings(host_string=PRODUCTION_SERVER['server']):
+        with cd(PRODUCTION_SERVER['path']):
+            run("git reset --hard")
+
+            with prefix('source  %s' % PRODUCTION_SERVER['path']):
+                run('pip install -r %s' % REQUIREMENTS_FILE)
+                run("./manage.py migrate")
+                run("./manage.py clear_cache")
+
+            run("touch tmp/restart.txt")
 
 
 def local_act():
@@ -56,11 +68,18 @@ def local_act():
     activate_env = os.path.expanduser(os.path.join(BASE_DIR, ".env/bin/activate_this.py"))
     execfile(activate_env, dict(__file__=activate_env))
 
-    # for host, dir_name in HOSTS:
-    #     with settings(host_string=host):
-    #         with cd(dir_name):
-    #             run('mkdir -p %s' % media)
-    #             put(os.path.join(BASE_DIR, media), dir_name)
+    # local("find %s -type d -exec sh -c ' ls \"$0\"/*.jpeg 2>/dev/null && jpegoptim --strip-all -v -t \"$0\"/*.jpeg ' {} \;" % BASE_DIR)
+    # local("find %s -type d -exec sh -c ' ls \"$0\"/*.jpg 2>/dev/null && jpegoptim --strip-all -v -t \"$0\"/*.jpg ' {} \;" % BASE_DIR)
+    # local("find %s -type d -exec sh -c ' ls \"$0\"/*.png 2>/dev/null && optipng -o5 \"$0\"/*.png ' {} \;" % BASE_DIR)
+    # local("find %s -type d -exec sh -c ' ls \"$0\"/*.png 2>/dev/null && optipng -o5 \"$0\"/*.png ' {} \;" % os.path.join(BASE_DIR, "static/src/images/"))
+
+    with settings(host_string=MY_SERVER['server']):
+        with cd(MY_SERVER['path']):
+            put(os.path.join(BASE_DIR, media), MY_SERVER['path'])
+
+    with settings(host_string=PRODUCTION_SERVER['server']):
+        with cd(PRODUCTION_SERVER['path']):
+            put(os.path.join(BASE_DIR, media), PRODUCTION_SERVER['path'])
 
     local("./manage.py test")
     local("grunt default")
@@ -83,4 +102,5 @@ def local_act():
 
         local("git push bit")
         local("git push production")
+        local("git push origin")
 

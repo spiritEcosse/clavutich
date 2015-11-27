@@ -37,16 +37,18 @@ hs.lang = {
 
 // Add the controlbar
 hs.addSlideshow({
-	//slideshowGroup: 'group1',
-	interval: 5000,
-	repeat: false,
-	useControls: true,
-	fixedControls: 'fit',
-	overlayOptions: {
-		opacity: 0.75,
-		position: 'bottom center',
-		hideOnMouseOut: true
-	}
+    //slideshowGroup: 'group1',
+    interval: 5000,
+    repeat: false,
+    useControls: true,
+    fixedControls: 'fit',
+    overlayOptions: {
+        opacity: 0.75,
+        position: 'bottom center',
+        hideOnMouseOut: true
+    }
 });
 
 $(':checkbox').checkboxpicker();
+
+bundle.use(require("cssify2"));

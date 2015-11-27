@@ -21,6 +21,10 @@ module.exports = (grunt) ->
           'static/bower_components/angular-scroll/angular-scroll.min.js',
           'static_root/djangular/js/django-angular.js',
           'static/src/highslide/highslide-with-gallery.js',
+          'node_modules/cssify2/lib/cssify-browser.js',
+          'node_modules/load-css/load-css.js',
+          'node_modules/insert-css/index.js',
+          'node_modules/requirejs/require.js',
           'static/src/js/**/*.js',
         ],
         dest: 'static/build/js/script.min.js'
@@ -37,5 +41,6 @@ module.exports = (grunt) ->
 
   grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-yui-compressor')
+  grunt.loadNpmTasks('grunt-contrib-imagemin')
   grunt.registerTask('default', ['coffee:files', 'min:dist', 'cssmin:dist'])
 

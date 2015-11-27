@@ -1,6 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea/
 .env/
+*.pyc
 clavutich/local_settings.py
 /media/cache/
 /media/images/catalog/category/**

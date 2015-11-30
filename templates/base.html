@@ -20,7 +20,8 @@
             <link rel="stylesheet" type="text/css" href="{% static "src/css/shop-homepage.css" %}">
         {% else %}
             <!--#if expr="$HTTP_COOKIE=/fullcss\=true/" -->
-                <link rel="stylesheet" href="{% static "build/css/style.min.css" %}">
+                <link rel="stylesheet" href="{% static "build/css/style.min.css" %}"  media="none"
+                  onload="if(media!='all')media='all'">
             <!--#else -->
             <noscript><link rel="stylesheet" href="{% static "build/css/style.min.css" %}"></noscript>
         {% endif %}

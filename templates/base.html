@@ -177,15 +177,19 @@
     {% else %}
         <script async src="{% static "build/js/script.min.js" %}"></script>
         <script>
-            var cb = function() {
-                var l = document.createElement('link'); l.rel = 'stylesheet';
-                l.href = '/static_root/build/css/style.min.css';
-                var h = document.getElementsByTagName('head')[0]; h.parentNode.insertBefore(l, h);
-            };
-            var raf = requestAnimationFrame || mozRequestAnimationFrame ||
-                    webkitRequestAnimationFrame || msRequestAnimationFrame;
-            if (raf) raf(cb);
-            else window.addEventListener('load', cb);
+            function loadCss(filename) {
+                var l = document.createElement('link');
+                l.rel = 'stylesheet';
+                l.href = filename;
+                var h = document.getElementsByTagName('head')[0];
+                h.parentNode.insertBefore(l, h);
+            }
+
+            function cb() {
+                loadCss('/static_root/build/css/style.min.css');
+            }
+
+            window.addEventListener('load', cb);
         </script>
     {% endif %}
     </body>

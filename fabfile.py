@@ -97,5 +97,5 @@ def local_act():
 
         local("git push bit")
         local("git push production")
-        local("git push origin")
+        # local("git push origin")
 

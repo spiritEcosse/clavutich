@@ -19,8 +19,10 @@
             <link rel="stylesheet" type="text/css" href="{% static "src/highslide/highslide.css" %}" />
             <link rel="stylesheet" type="text/css" href="{% static "src/css/shop-homepage.css" %}">
         {% else %}
-            <link href="{% static "build/css/style.min.css" %}" type="text/css" rel="stylesheet" media="none"
-                  onload="if(media!='all')media='all'" />
+            <!--#if expr="$HTTP_COOKIE=/fullcss\=true/" -->
+                <link rel="stylesheet" href="{% static "build/css/style.min.css" %}">
+            <!--#else -->
+            <noscript><link rel="stylesheet" href="{% static "build/css/style.min.css" %}"></noscript>
         {% endif %}
 
         <title>{% block title %}Clavutich{% endblock %}</title>

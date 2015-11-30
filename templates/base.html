@@ -19,10 +19,15 @@
             <link rel="stylesheet" type="text/css" href="{% static "src/highslide/highslide.css" %}" />
             <link rel="stylesheet" type="text/css" href="{% static "src/css/shop-homepage.css" %}">
         {% else %}
+            <meta name="fullcss"  content="{% static "build/css/style.min.css" %}">
             <!--#if expr="$HTTP_COOKIE=/fullcss\=true/" -->
                 <link rel="stylesheet" href="{% static "build/css/style.min.css" %}"  media="none"
                   onload="if(media!='all')media='all'">
             <!--#else -->
+            <style>
+                
+            </style>
+            <!--#endif -->
             <noscript><link rel="stylesheet" href="{% static "build/css/style.min.css" %}"></noscript>
         {% endif %}
 

@@ -21,6 +21,8 @@ module.exports = (grunt) ->
           'static/bower_components/angular-scroll/angular-scroll.min.js',
           'static_root/djangular/js/django-angular.js',
           'static/src/highslide/highslide-with-gallery.js',
+          'static/bower_components/loadcss/loadCSS.js',
+          'static/bower_components/loadcss/onloadCSS.js',
           'static/src/js/**/*.js',
         ],
         dest: 'static/build/js/script.min.js'

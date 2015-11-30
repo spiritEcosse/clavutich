@@ -1,0 +1,15 @@
+{
+  "name": "yepnope.js",
+  "homepage": "https://github.com/SlexAxton/yepnope.js",
+  "version": "2.0.0",
+  "_release": "2.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "2.0.0",
+    "commit": "90f9d379c6fba1fcba7aff5ecce13bb8058aaccd"
+  },
+  "_source": "https://github.com/SlexAxton/yepnope.js.git",
+  "_target": "~2.0.0",
+  "_originalSource": "https://github.com/SlexAxton/yepnope.js.git",
+  "_direct": true
+}

@@ -7,7 +7,6 @@ from clavutich.settings import BASE_DIR, PROJECT_NAME
 from fabric.state import env
 from clavutich.settings_local import MY_SERVER, PRODUCTION_SERVER
 env.user = 'root'
-env.hosts = ['78.24.216.187']
 env.skip_bad_hosts = True
 env.warn_only = False
 env.parallel = False
@@ -30,19 +29,29 @@ def remote_act():
     run remote acts
     :return: None
     """
-    run("apt-get install libmemcached-dev")
-
-    project_dir = run("path_project_clavutich")
-
-    with cd(project_dir.split()[0]):
-        with prefix('env_activate_clavutich'):
+    with settings(host_string=MY_SERVER['server']):
+        with cd(MY_SERVER['path']):
+            run("apt-get install libmemcached-dev")
             run("git reset --hard")
-            run('pip install -r %s' % REQUIREMENTS_FILE)
-            run("./manage.py migrate")
-            # run("./manage.py flush --noinput")
-            # run("./manage.py loaddata db.json")
-            run("./manage.py clear_cache")
-            # run("reload_project_clavutich")
+
+            with prefix('source %s' % MY_SERVER['venv']):
+                run('pip install -r %s' % REQUIREMENTS_FILE)
+                run("./manage.py migrate")
+                # run("./manage.py flush --noinput")
+                # run("./manage.py loaddata db.json")
+                run("./manage.py clear_cache")
+
+    # with settings(host_string=PRODUCTION_SERVER['server'], user='clavutic'):
+    #     with cd(PRODUCTION_SERVER['path']):
+    #         run("apt-get install libmemcached-dev")
+    #         run("git reset --hard")
+    #
+    #         with prefix('source  %s' % PRODUCTION_SERVER['venv']):
+    #             run('pip install -r %s' % REQUIREMENTS_FILE)
+    #             run("./manage.py migrate")
+    #             run("./manage.py clear_cache")
+    #
+    #         run("touch tmp/restart.txt")
 
 
 def local_act():
@@ -59,11 +68,14 @@ def local_act():
     # local("find %s -type d -exec sh -c ' ls \"$0\"/*.png 2>/dev/null && optipng -o5 \"$0\"/*.png ' {} \;" % BASE_DIR)
     # local("find %s -type d -exec sh -c ' ls \"$0\"/*.png 2>/dev/null && optipng -o5 \"$0\"/*.png ' {} \;" % os.path.join(BASE_DIR, "static/src/images/"))
 
-    # project_dir = run("path_project_clavutich")
-    #
-    # with cd(project_dir.split()[0]):
-    #     put(os.path.join(BASE_DIR, media), '.')
+    # with settings(host_string=MY_SERVER['server']):
+    #     with cd(MY_SERVER['path']):
+    #         put(os.path.join(BASE_DIR, media), MY_SERVER['path'])
 
+    # with settings(host_string=PRODUCTION_SERVER['server'], user='clavutic'):
+    #     with cd(PRODUCTION_SERVER['path']):
+    #         put(os.path.join(BASE_DIR, media), PRODUCTION_SERVER['path'])
+    #
     local("./manage.py test")
     local("grunt default")
     local("./manage.py makemigrations")
@@ -85,5 +97,5 @@ def local_act():
 
         local("git push bit")
         local("git push production")
-        #ocal("git push origin"))
+        local("git push origin")
 

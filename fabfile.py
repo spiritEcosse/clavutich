@@ -21,35 +21,6 @@ def deploy():
     deploy project on remote server
     :return:
     """
-    local_act()
-    remote_act()
-
-
-def remote_act():
-    """
-    run remote acts
-    :return: None
-    """
-    run("apt-get install libmemcached-dev")
-
-    project_dir = run("path_project_clavutich")
-
-    with cd(project_dir.split()[0]):
-        with prefix('env_activate_clavutich'):
-            run("git reset --hard")
-            run('pip install -r %s' % REQUIREMENTS_FILE)
-            run("./manage.py migrate")
-            # run("./manage.py flush --noinput")
-            # run("./manage.py loaddata db.json")
-            run("./manage.py clear_cache")
-            run("reload_project_clavutich")
-
-
-def local_act():
-    """
-    prepare deploy
-    :return: None
-    """
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "%s.settings" % PROJECT_NAME)
     activate_env = os.path.expanduser(os.path.join(BASE_DIR, ".env/bin/activate_this.py"))
     execfile(activate_env, dict(__file__=activate_env))
@@ -58,11 +29,6 @@ def local_act():
     # local("find %s -type d -exec sh -c ' ls \"$0\"/*.jpg 2>/dev/null && jpegoptim --strip-all -v -t \"$0\"/*.jpg ' {} \;" % BASE_DIR)
     # local("find %s -type d -exec sh -c ' ls \"$0\"/*.png 2>/dev/null && optipng -o5 \"$0\"/*.png ' {} \;" % BASE_DIR)
     # local("find %s -type d -exec sh -c ' ls \"$0\"/*.png 2>/dev/null && optipng -o5 \"$0\"/*.png ' {} \;" % os.path.join(BASE_DIR, "static/src/images/"))
-
-    # project_dir = run("path_project_clavutich")
-    #
-    # with cd(project_dir.split()[0]):
-    #     put(os.path.join(BASE_DIR, media), '.')
 
     local("./manage.py test")
     local("grunt default")
@@ -86,4 +52,30 @@ def local_act():
         local("git push bit")
         local("git push production")
         # local("git push origin")
+        
+    remote_act()
 
+
+def remote_act():
+    """
+    run remote acts
+    :return: None
+    """
+    # project_dir = run("path_project_clavutich")
+    #
+    # with cd(project_dir.split()[0]):
+    #     put(os.path.join(BASE_DIR, media), '.')
+
+    run("apt-get install libmemcached-dev")
+
+    project_dir = run("path_project_clavutich")
+
+    with cd(project_dir.split()[0]):
+        with prefix('env_activate_clavutich'):
+            run("git reset --hard")
+            run('pip install -r %s' % REQUIREMENTS_FILE)
+            run("./manage.py migrate")
+            # run("./manage.py flush --noinput")
+            # run("./manage.py loaddata db.json")
+            run("./manage.py clear_cache")
+            run("reload_project_clavutich")

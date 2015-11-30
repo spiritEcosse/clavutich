@@ -179,8 +179,7 @@
     {% endif %}
     </body>
     {% if not debug %}
-        <link rel="stylesheet" href="{% static "build/css/style.min.css" %}" media="none"
-                  onload="if(media!='all')media='all'">
+        <link rel="stylesheet" href="{% static "build/css/style.min.css" %}" >
     {% endif %}
     </html>
 {% endspaceless %}

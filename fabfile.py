@@ -7,8 +7,7 @@ from clavutich.settings import BASE_DIR, PROJECT_NAME
 from fabric.state import env
 from clavutich.settings_local import MY_SERVER, PRODUCTION_SERVER
 env.user = 'root'
-# 'clavutic@46.105.135.208',
-env.hosts = ['78.24.216.187']
+env.hosts = ['clavutic@46.105.135.208', '78.24.216.187']
 env.skip_bad_hosts = True
 env.warn_only = False
 env.parallel = False
@@ -32,17 +31,17 @@ def remote_act():
     :return: None
     """
     run("apt-get install libmemcached-dev")
-    run("git reset --hard")
 
     project_dir = run("path_project_clavutich")
 
     with cd(project_dir.split()[0]):
         with prefix('env_activate_clavutich'):
+            run("git reset --hard")
             run('pip install -r %s' % REQUIREMENTS_FILE)
             run("./manage.py migrate")
             # run("./manage.py flush --noinput")
             # run("./manage.py loaddata db.json")
-            # run("./manage.py clear_cache")
+            run("./manage.py clear_cache")
             run("reload_project_clavutich")
 
 
@@ -61,7 +60,7 @@ def local_act():
     # local("find %s -type d -exec sh -c ' ls \"$0\"/*.png 2>/dev/null && optipng -o5 \"$0\"/*.png ' {} \;" % os.path.join(BASE_DIR, "static/src/images/"))
 
     # project_dir = run("path_project_clavutich")
-
+    #
     # with cd(project_dir.split()[0]):
     #     put(os.path.join(BASE_DIR, media), '.')
 
@@ -86,5 +85,5 @@ def local_act():
 
         local("git push bit")
         local("git push production")
-        local("git push origin")
+        # local("git push origin")
 

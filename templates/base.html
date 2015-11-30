@@ -18,6 +18,8 @@
             <link rel="stylesheet" type="text/css" href="{% static "src/css/bootstrap.css" %}">
             <link rel="stylesheet" type="text/css" href="{% static "src/highslide/highslide.css" %}" />
             <link rel="stylesheet" type="text/css" href="{% static "src/css/shop-homepage.css" %}">
+        {% else %}
+            <link href="{% static "build/css/style.min.css" %}" rel="stylesheet" media="none" onload="if(media!='all')media='all'">
         {% endif %}
 
         <title>{% block title %}Clavutich{% endblock %}</title>
@@ -179,8 +181,4 @@
     {% endif %}
     </body>
     </html>
-
-    {% if not debug %}
-        <link href="{% static "build/css/style.min.css" %}" rel="stylesheet">
-    {% endif %}
 {% endspaceless %}

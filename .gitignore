@@ -12,3 +12,4 @@ parse_html.py
 clavutich/settings_local.py
 log
 *.log
+fabfile_old.py

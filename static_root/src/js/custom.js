@@ -50,5 +50,3 @@ hs.addSlideshow({
 });
 
 $(':checkbox').checkboxpicker();
-
-bundle.use(require("cssify2"));

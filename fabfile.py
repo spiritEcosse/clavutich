@@ -7,6 +7,7 @@ from clavutich.settings import BASE_DIR, PROJECT_NAME
 from fabric.state import env
 from clavutich.settings_local import MY_SERVER, PRODUCTION_SERVER
 env.user = 'root'
+env.hosts = ['78.24.216.187', 'clavutic@46.105.135.208']
 env.skip_bad_hosts = True
 env.warn_only = False
 env.parallel = False
@@ -29,34 +30,17 @@ def remote_act():
     run remote acts
     :return: None
     """
-    with settings(host_string=MY_SERVER['server']):
-        with cd(MY_SERVER['path']):
-            run("apt-get install libmemcached-dev")
-            run("git reset --hard")
+    run("apt-get install libmemcached-dev")
+    run("git reset --hard")
 
-            with prefix('source %s' % MY_SERVER['venv']):
-                run('pip install -r %s' % REQUIREMENTS_FILE)
-                run("./manage.py migrate")
-                # run("./manage.py flush --noinput")
-                # run("./manage.py loaddata db.json")
-                run("./manage.py clear_cache")
-
-            pids = run("ps -ef|grep -v grep |grep '%s' | awk '{print $2}'" % PROJECT_NAME)
-
-            for pid in pids.split():
-                run("kill -9 %s" % pid)
-            run("%s" % PROJECT_NAME)
-
-    with settings(host_string=PRODUCTION_SERVER['server']):
-        with cd(PRODUCTION_SERVER['path']):
-            run("git reset --hard")
-
-            with prefix('source  %s' % PRODUCTION_SERVER['path']):
-                run('pip install -r %s' % REQUIREMENTS_FILE)
-                run("./manage.py migrate")
-                run("./manage.py clear_cache")
-
-            run("touch tmp/restart.txt")
+    with cd('path_project_clavutich'):
+        with prefix('env_activate_clavutich'):
+            run('pip install -r %s' % REQUIREMENTS_FILE)
+            run("./manage.py migrate")
+            # run("./manage.py flush --noinput")
+            # run("./manage.py loaddata db.json")
+            # run("./manage.py clear_cache")
+            run("reload_project_clavutich")
 
 
 def local_act():
@@ -72,14 +56,8 @@ def local_act():
     # local("find %s -type d -exec sh -c ' ls \"$0\"/*.jpg 2>/dev/null && jpegoptim --strip-all -v -t \"$0\"/*.jpg ' {} \;" % BASE_DIR)
     # local("find %s -type d -exec sh -c ' ls \"$0\"/*.png 2>/dev/null && optipng -o5 \"$0\"/*.png ' {} \;" % BASE_DIR)
     # local("find %s -type d -exec sh -c ' ls \"$0\"/*.png 2>/dev/null && optipng -o5 \"$0\"/*.png ' {} \;" % os.path.join(BASE_DIR, "static/src/images/"))
-
-    with settings(host_string=MY_SERVER['server']):
-        with cd(MY_SERVER['path']):
-            put(os.path.join(BASE_DIR, media), MY_SERVER['path'])
-
-    with settings(host_string=PRODUCTION_SERVER['server']):
-        with cd(PRODUCTION_SERVER['path']):
-            put(os.path.join(BASE_DIR, media), PRODUCTION_SERVER['path'])
+    project_dir = run("path_project_clavutich")
+    put(os.path.join(BASE_DIR, media), project_dir)
 
     local("./manage.py test")
     local("grunt default")

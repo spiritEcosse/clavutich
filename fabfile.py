@@ -7,7 +7,8 @@ from clavutich.settings import BASE_DIR, PROJECT_NAME
 from fabric.state import env
 from clavutich.settings_local import MY_SERVER, PRODUCTION_SERVER
 env.user = 'root'
-env.hosts = ['clavutic@46.105.135.208']
+# 'clavutic@46.105.135.208',
+env.hosts = ['78.24.216.187']
 env.skip_bad_hosts = True
 env.warn_only = False
 env.parallel = False
@@ -59,10 +60,10 @@ def local_act():
     # local("find %s -type d -exec sh -c ' ls \"$0\"/*.png 2>/dev/null && optipng -o5 \"$0\"/*.png ' {} \;" % BASE_DIR)
     # local("find %s -type d -exec sh -c ' ls \"$0\"/*.png 2>/dev/null && optipng -o5 \"$0\"/*.png ' {} \;" % os.path.join(BASE_DIR, "static/src/images/"))
 
-    project_dir = run("path_project_clavutich")
+    # project_dir = run("path_project_clavutich")
 
-    with cd(project_dir.split()[0]):
-        put(os.path.join(BASE_DIR, media), '.')
+    # with cd(project_dir.split()[0]):
+    #     put(os.path.join(BASE_DIR, media), '.')
 
     local("./manage.py test")
     local("grunt default")

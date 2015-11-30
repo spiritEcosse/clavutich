@@ -18,6 +18,10 @@
             <link rel="stylesheet" type="text/css" href="{% static "src/css/bootstrap.css" %}">
             <link rel="stylesheet" type="text/css" href="{% static "src/highslide/highslide.css" %}" />
             <link rel="stylesheet" type="text/css" href="{% static "src/css/shop-homepage.css" %}">
+        {% else %}
+            <noscript>
+                <link type="text/css" rel="stylesheet" href="{% static "build/css/style.min.css" %}">
+            </noscript>
         {% endif %}
 
         <title>{% block title %}Clavutich{% endblock %}</title>
@@ -176,10 +180,16 @@
         <script src="{% static "src/js/clavutich/src/js/script.js" %}" type="text/javascript"></script>
     {% else %}
         <script async src="{% static "build/js/script.min.js" %}"></script>
+        <script>
+            (function(d,u){for (var i in u) {var l=d.createElement('link');
+                var r=d.getElementsByTagName('script')[0];l.type='text/css';
+                l.rel='stylesheet';l.media='only x';l.href=u[i];r.parentNode.insertBefore(l,r);
+                (function(l){setTimeout( function(){l.media='all';});})(l)}}(document,['/static_root/build/css/style.min.css']));
+        </script>
     {% endif %}
     </body>
     {% if not debug %}
-        <link rel="stylesheet" href="{% static "build/css/style.min.css" %}" >
+        {#        <link rel="stylesheet" href="{% static "build/css/style.min.css" %}" >#}
     {% endif %}
     </html>
 {% endspaceless %}

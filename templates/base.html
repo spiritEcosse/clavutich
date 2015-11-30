@@ -18,8 +18,8 @@
             <link rel="stylesheet" type="text/css" href="{% static "src/css/bootstrap.css" %}">
             <link rel="stylesheet" type="text/css" href="{% static "src/highslide/highslide.css" %}" />
             <link rel="stylesheet" type="text/css" href="{% static "src/css/shop-homepage.css" %}">
-            {#        {% else %}#}
-            {#            <link href="{% static "build/css/style.min.css" %}" type="text/css" rel="stylesheet" media="none" onload="if(media!='all')media='all'" lazyload />#}
+        {% else %}
+            <link href="{% static "build/css/style.min.css" %}" type="text/css" rel="stylesheet" media="none" onload="if(media!='all')media='all'" lazyload />
         {% endif %}
 
         <title>{% block title %}Clavutich{% endblock %}</title>
@@ -178,73 +178,6 @@
         <script src="{% static "src/js/clavutich/src/js/script.js" %}" type="text/javascript"></script>
     {% else %}
         <script async src="{% static "build/js/script.min.js" %}"></script>
-        <script>
-            function loadCSS(href){
-                var ss = window.document.createElement('link'),
-                        head = window.document.getElementsByTagName('head')[0];
-
-                ss.rel = 'stylesheet';
-                ss.href = href;
-
-                // temporarily, set media to something non-matching to ensure it'll
-                // fetch without blocking render
-                ss.media = 'only x';
-
-                head.appendChild(ss);
-
-                setTimeout( function(){
-                    // set media back to `all` so that the stylesheet applies once it loads
-                    ss.media = 'all';
-                },0);
-            }
-            (function(funcName, baseObj) {
-                funcName = funcName || "isReady";
-                baseObj = baseObj || window;
-                var readyList = [];
-                var readyFired = false;
-                var readyEventHandlersInstalled = false;
-                function ready() {
-                    if (!readyFired) {
-                        readyFired = true;
-                        for (var i = 0; i < readyList.length; i++) {
-                            readyList[i].fn.call(window, readyList[i].ctx);
-                        }
-                        readyList = [];
-                    }
-                }
-
-                function readyStateChange() {
-                    if ( document.readyState === "complete" ) {
-                        ready();
-                    }
-                }
-
-                baseObj[funcName] = function(callback, context) {
-                    if (readyFired) {
-                        setTimeout(function() {callback(context);}, 1);
-                        return;
-                    } else {
-                        readyList.push({fn: callback, ctx: context});
-                    }
-                    if (document.readyState === "complete") {
-                        setTimeout(ready, 1);
-                    } else if (!readyEventHandlersInstalled) {
-                        if (document.addEventListener) {
-                            document.addEventListener("DOMContentLoaded", ready, false);
-                            window.addEventListener("load", ready, false);
-                        } else {
-                            document.attachEvent("onreadystatechange", readyStateChange);
-                            window.attachEvent("onload", ready);
-                        }
-                        readyEventHandlersInstalled = true;
-                    }
-                }
-            })("isReady", window);
-
-            isReady(function() {
-                loadCSS('/static_root/build/css/style.min.css');
-            });
-        </script>
     {% endif %}
     </body>
     </html>

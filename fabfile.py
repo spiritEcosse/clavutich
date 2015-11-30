@@ -7,7 +7,7 @@ from clavutich.settings import BASE_DIR, PROJECT_NAME
 from fabric.state import env
 from clavutich.settings_local import MY_SERVER, PRODUCTION_SERVER
 env.user = 'root'
-env.hosts = ['clavutic@46.105.135.208', '78.24.216.187']
+env.hosts = ['78.24.216.187']
 env.skip_bad_hosts = True
 env.warn_only = False
 env.parallel = False

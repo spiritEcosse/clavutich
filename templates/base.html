@@ -180,13 +180,10 @@
         <script src="{% static "src/js/clavutich/src/js/script.js" %}" type="text/javascript"></script>
     {% else %}
         <script async src="{% static "build/js/script.min.js" %}"></script>
-        <script>
-        function lCss(url,media) {var d=document;var l=d.createElement('link');l.rel='stylesheet';l.type='text/css';l.href=url;l.media=media; d.getElementsByTagName('head')[0].appendChild(l);}function deferredCSS() {lCss('/static_root/build/css/style.min.css','all');}if(window.addEventListener){window.addEventListener('DOMContentLoaded',deferredCSS,false);}else{window.onload = deferredCSS;}
-        </script>
     {% endif %}
     </body>
     {% if not debug %}
-        {#        <link rel="stylesheet" href="{% static "build/css/style.min.css" %}" >#}
+        <link rel="stylesheet" href="{% static "build/css/style.min.css" %}" media="all">
     {% endif %}
     </html>
 {% endspaceless %}

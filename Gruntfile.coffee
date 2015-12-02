@@ -29,8 +29,8 @@ module.exports = (grunt) ->
         src: [
           'static/bower_components/font-awesome/css/font-awesome.css',
           'static_root/djangular/css/styles.css',
-          'static/src/highslide/highslide.css',
           'static/src/css/bootstrap.css',
+          'static/src/highslide/highslide.css',
           'static/src/css/shop-homepage.css',
         ],
         dest: 'static/build/css/style.min.css'
@@ -40,3 +40,5 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-yui-compressor')
   grunt.loadNpmTasks('grunt-contrib-imagemin')
   grunt.registerTask('default', ['coffee:files', 'min:dist', 'cssmin:dist'])
+
+

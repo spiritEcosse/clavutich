@@ -24,7 +24,6 @@ paramiko==1.15.3
 Pillow==3.0.0
 psycopg2==2.6.1
 pycrypto==2.6.1
-pylibmc==1.5.0
 pynliner==0.5.2
 python-memcached==1.57
 pytz==2015.6

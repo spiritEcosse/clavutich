@@ -13,3 +13,4 @@ clavutich/settings_local.py
 log
 *.log
 fabfile_old.py
+fabfile.py

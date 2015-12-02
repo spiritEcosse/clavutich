@@ -18,8 +18,6 @@
             <link rel="stylesheet" type="text/css" href="{% static "src/css/bootstrap.css" %}">
             <link rel="stylesheet" type="text/css" href="{% static "src/highslide/highslide.css" %}" />
             <link rel="stylesheet" type="text/css" href="{% static "src/css/shop-homepage.css" %}">
-        {% else %}
-            <link rel="stylesheet" type="text/css" href="{% static "build/css/style.min.css" %}">
         {% endif %}
 
         <title>{% block title %}Clavutich{% endblock %}</title>
@@ -180,5 +178,8 @@
         <script async src="{% static "build/js/script.min.js" %}"></script>
     {% endif %}
     </body>
+    {%  if not debug %}
+        <link rel="stylesheet" type="text/css" href="{% static "build/css/style.min.css" %}">
+    {% endif %}
     </html>
 {% endspaceless %}

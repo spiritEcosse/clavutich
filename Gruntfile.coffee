@@ -33,7 +33,7 @@ module.exports = (grunt) ->
           'static/src/css/bootstrap.css',
           'static/src/css/shop-homepage.css',
         ],
-        dest: 'static/build/css/style_main.min.css'
+        dest: 'static/build/css/style.min.css'
   )
 
   grunt.loadNpmTasks('grunt-contrib-coffee')

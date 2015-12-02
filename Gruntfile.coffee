@@ -21,8 +21,6 @@ module.exports = (grunt) ->
           'static/bower_components/angular-scroll/angular-scroll.min.js',
           'static_root/djangular/js/django-angular.js',
           'static/src/highslide/highslide-with-gallery.js',
-          'static/bower_components/loadcss/loadCSS.js',
-          'static/bower_components/loadcss/onloadCSS.js',
           'static/src/js/**/*.js',
         ],
         dest: 'static/build/js/script.min.js'
@@ -32,13 +30,13 @@ module.exports = (grunt) ->
           'static/bower_components/font-awesome/css/font-awesome.css',
           'static_root/djangular/css/styles.css',
           'static/src/highslide/highslide.css',
-          'static/src/css/**/*.css',
+          'static/src/css/bootstrap.css',
+          'static/src/css/shop-homepage.css',
         ],
-        dest: 'static/build/css/style.min.css'
+        dest: 'static/build/css/style_main.min.css'
   )
 
   grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-yui-compressor')
   grunt.loadNpmTasks('grunt-contrib-imagemin')
   grunt.registerTask('default', ['coffee:files', 'min:dist', 'cssmin:dist'])
-

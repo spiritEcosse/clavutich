@@ -41,17 +41,19 @@ def remote_act():
                 # run("./manage.py loaddata db.json")
                 run("./manage.py clear_cache")
 
-    # with settings(host_string=PRODUCTION_SERVER['server'], user='clavutic'):
-    #     with cd(PRODUCTION_SERVER['path']):
-    #         run("apt-get install libmemcached-dev")
-    #         run("git reset --hard")
-    #
-    #         with prefix('source  %s' % PRODUCTION_SERVER['venv']):
-    #             run('pip install -r %s' % REQUIREMENTS_FILE)
-    #             run("./manage.py migrate")
-    #             run("./manage.py clear_cache")
-    #
-    #         run("touch tmp/restart.txt")
+    with settings(host_string=PRODUCTION_SERVER['server'], user='clavutic'):
+        with cd(PRODUCTION_SERVER['path']):
+            run("apt-get install libmemcached-dev")
+            run("git reset --hard")
+            run("git pull")
+            run("git reset --hard")
+
+            with prefix('source  %s' % PRODUCTION_SERVER['venv']):
+                run('pip install -r %s' % REQUIREMENTS_FILE)
+                run("./manage.py migrate")
+                run("./manage.py clear_cache")
+
+            run("touch tmp/restart.txt")
 
 
 def local_act():
@@ -97,5 +99,4 @@ def local_act():
 
         local("git push bit")
         local("git push production")
-        # local("git push origin")
 

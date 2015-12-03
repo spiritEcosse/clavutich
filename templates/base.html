@@ -176,10 +176,19 @@
         <script src="{% static "src/js/clavutich/src/js/script.js" %}" type="text/javascript"></script>
     {% else %}
         <script async src="{% static "build/js/script.min.js" %}"></script>
+        <script>
+            $( document ).ready(function() {
+                loadCSS = function(href) {
+                    var cssLink = $("<link rel='stylesheet' type='text/css' href='"+href+"'>");
+                    $("head").append(cssLink);
+                };
+                loadCSS('/static_root/build/css/style.min.css');
+            });
+        </script>
     {% endif %}
     </body>
     {%  if not debug %}
-        <link rel="stylesheet" type="text/css" href="{% static "build/css/style.min.css" %}">
+{#        <link rel="stylesheet" type="text/css" href="{% static "build/css/style.min.css" %}">#}
     {% endif %}
     </html>
 {% endspaceless %}
